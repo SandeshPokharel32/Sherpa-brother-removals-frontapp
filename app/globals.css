@@ -1,0 +1,183 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+@layer base {
+  :root {
+    /* Custom brand colors */
+    --prussian-blue: 204, 30%, 17%;
+    --blue-lagoon: 188, 100%, 25%;
+    --tundora-grey: 270, 2%, 25%;
+    --raisin-black: 345, 4%, 13%;
+    
+    /* Shadcn system colors */
+    --background: 0 0% 100%;
+    --foreground: 345 4% 13%;
+    --card: 0 0% 100%;
+    --card-foreground: 345 4% 13%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 345 4% 13%;
+    --primary: 204 30% 17%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 188 100% 25%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 270 2% 25%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 270 2% 25%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 204 30% 17%;
+    --radius: 0.5rem;
+  }
+  
+  .dark {
+    --background: 345 4% 13%;
+    --foreground: 0 0% 98%;
+    --card: 345 4% 13%;
+    --card-foreground: 0 0% 98%;
+    --popover: 345 4% 13%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 204 30% 17%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 188 100% 25%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 270 2% 25%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 270 2% 25%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 204 30% 17%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-inter;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-azosans tracking-tight;
+  }
+  h1 {
+    @apply text-4xl sm:text-5xl md:text-6xl leading-tight;
+  }
+  h2 {
+    @apply text-3xl sm:text-4xl md:text-5xl leading-tight;
+  }
+  h3 {
+    @apply text-2xl sm:text-3xl leading-snug;
+  }
+  h4 {
+    @apply text-xl sm:text-2xl leading-snug;
+  }
+  p {
+    @apply leading-relaxed;
+  }
+}
+
+@layer components {
+  .hero-overlay {
+    @apply absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-raisinBlack/80;
+  }
+  
+  .container-custom {
+    @apply container mx-auto px-4 md:px-8;
+  }
+  
+  .btn-primary {
+    @apply bg-prussianBlue hover:bg-prussianBlue/90 text-white px-6 py-3 rounded-md transition-all duration-300 inline-block font-medium;
+  }
+  
+  .btn-secondary {
+    @apply bg-blueLagoon hover:bg-blueLagoon/90 text-white px-6 py-3 rounded-md transition-all duration-300 inline-block font-medium;
+  }
+  
+  .btn-outline {
+    @apply border-2 border-white text-white hover:bg-white/10 px-6 py-3 rounded-md transition-all duration-300 inline-block font-medium;
+  }
+  
+  .expedition-card {
+    @apply relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300;
+  }
+  
+  .expedition-card-overlay {
+    @apply absolute inset-0 bg-gradient-to-t from-raisinBlack to-transparent;
+  }
+  
+  .region-card {
+    @apply relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300;
+  }
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Custom animation delays */
+.delay-100 {
+  animation-delay: 100ms;
+}
+.delay-200 {
+  animation-delay: 200ms;
+}
+.delay-300 {
+  animation-delay: 300ms;
+}
+.delay-400 {
+  animation-delay: 400ms;
+}
+.delay-500 {
+  animation-delay: 500ms;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* For webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--blue-lagoon);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--prussian-blue);
+}
