@@ -123,7 +123,7 @@ export default function HorizontalVideoSlider() {
             </div>
             <div className="absolute w-full inset-0 z-30 flex flex-wrap items-end justify-between px-8 py-20 md:px-20">
               <div className="text-left">
-                <h1 className="text-foreground font-bold text-4xl sm:text-5xl md:text-6xl leading-tight font-sans">
+                <h1 className="text-white font-bold text-4xl sm:text-5xl md:text-6xl leading-tight font-sans">
                   {heading}
                 </h1>
                 <p className="mt-4 text-foreground text-sm sm:text-base font-light">
