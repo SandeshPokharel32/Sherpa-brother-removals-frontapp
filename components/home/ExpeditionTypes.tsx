@@ -83,8 +83,6 @@ export default function ExpeditionTypes() {
             {
               y: 0,
               opacity: 1,
-              duration: 0.8,
-              delay: 0.2 * index,
               scrollTrigger: {
                 trigger: card,
                 start: "top 85%",
@@ -100,10 +98,6 @@ export default function ExpeditionTypes() {
   return (
     <section ref={sectionRef} className="py-20 relative bg-white">
       <div className="container-custom">
-        <h2 className="text-4xl font-bold text-center mb-16 text-raisinBlack">
-          Expedition Types for Every Adventurer
-        </h2>
-
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {expeditionTypes.map((type, index) => (
             <div

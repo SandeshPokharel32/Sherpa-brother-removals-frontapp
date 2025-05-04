@@ -23,14 +23,14 @@ const ExpeditionCloud = () => {
 
   useGSAP(
     () => {
-      gsap.to(refs.cloud2.current, {
+      gsap.to(".cloud2", {
         y: "-=20", // moves up by 30px
         duration: 3,
         repeat: -1,
         yoyo: true,
         ease: "sine.inOut",
       });
-      gsap.to(refs.cloud3.current, {
+      gsap.to(".cloud3", {
         y: "-=20", // moves up by 30px
         duration: 3,
         repeat: -1,
@@ -38,67 +38,155 @@ const ExpeditionCloud = () => {
         ease: "sine.inOut",
       });
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: mainRef.current,
-          start: "top top",
-          end: "bottom center",
-          scrub: 1,
-        },
-      });
+      const tl = gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: mainRef.current,
+            start: "top top",
+            end: "100% 100%",
+            scrub: 2,
+            // pin: true,
+            // markers: true,
+          },
+        })
+        .fromTo(".sky", { y: 0 }, { y: -200 }, 0)
+        .fromTo(".cloud1", { y: 100 }, { y: -800 }, 0)
+        .fromTo(".cloud2", { y: -150 }, { y: -500 }, 0)
+        .fromTo(".cloud3", { y: -50 }, { y: -650 }, 0)
+        .fromTo(".mountBg", { y: -10 }, { y: -100 }, 0)
+        .fromTo(".mountMg", { y: -30 }, { y: -250 }, 0)
+        .fromTo(".mountFg", { y: -50 }, { y: -600 }, 0);
 
-      tl.fromTo(refs.sky.current, { y: 0 }, { y: -200 }, 0)
-        .fromTo(refs.cloud1.current, { y: 100 }, { y: -800 }, 0)
-        .fromTo(refs.cloud2.current, { y: -150 }, { y: -1200 }, 0)
-        .fromTo(refs.cloud3.current, { y: -50 }, { y: -650 }, 0)
-        .fromTo(refs.mountBg.current, { y: -10 }, { y: -100 }, 0)
-        .fromTo(refs.mountMg.current, { y: -30 }, { y: -250 }, 0)
-        .fromTo(refs.mountFg.current, { y: -50 }, { y: -200 }, 0);
-
-      const arrowBtn = arrowBtnRef.current;
-      const arrow = refs.arrow.current;
-
-      if (arrowBtn && arrow) {
-        const enter = () =>
-          gsap.to(arrow, {
-            y: 10,
-            duration: 0.8,
-            ease: "back.inOut(3)",
-            overwrite: "auto",
-          });
-
-        const leave = () =>
-          gsap.to(arrow, {
-            y: 0,
-            duration: 0.5,
-            ease: "power3.out",
-            overwrite: "auto",
-          });
-
-        const click = () =>
-          gsap.to(window, {
-            scrollTo: window.innerHeight,
-            duration: 1.5,
-            ease: "power1.inOut",
-          });
-
-        arrowBtn.addEventListener("mouseenter", enter);
-        arrowBtn.addEventListener("mouseleave", leave);
-        arrowBtn.addEventListener("click", click);
-
-        return () => {
-          arrowBtn.removeEventListener("mouseenter", enter);
-          arrowBtn.removeEventListener("mouseleave", leave);
-          arrowBtn.removeEventListener("click", click);
-        };
-      }
+      // tl.fromTo(refs.sky.current, { y: 0 }, { y: -200 }, 0)
+      //   .fromTo(refs.cloud1.current, { y: 100 }, { y: -800 }, 0)
+      //   .fromTo(refs.cloud2.current, { y: -150 }, { y: -1200 }, 0)
+      //   .fromTo(refs.cloud3.current, { y: -50 }, { y: -650 }, 0)
+      //   .fromTo(refs.mountBg.current, { y: -10 }, { y: -100 }, 0)
+      //   .fromTo(refs.mountMg.current, { y: -30 }, { y: -250 }, 0)
+      //   .fromTo(refs.mountFg.current, { y: -50 }, { y: -200 }, 0);
     },
     { scope: mainRef }
   );
 
   return (
-    <main ref={mainRef}>
+    <main
+      ref={mainRef}
+      className="min-h-screen relative"
+      style={{ fontSize: "99px", fontWeight: 900 }}
+    >
       <svg
+        viewBox="0 0 1200 800"
+        preserveAspectRatio="xMidYMid meet"
+        className="sticky top-0"
+        xmlns="http://www.w3.org/2000/svg"
+        style={{ width: "100%", height: "auto" }}
+      >
+        <mask id="m">
+          <g className="cloud1">
+            <rect fill="#fff" width="100%" height="801" y="799" />
+            <image
+              xlinkHref="https://assets.codepen.io/721952/cloud1Mask.jpg"
+              width="1200"
+              height="800"
+            />
+          </g>
+        </mask>
+
+        <image
+          className="sky"
+          xlinkHref="https://assets.codepen.io/721952/sky.jpg"
+          width="1200"
+          height="590"
+          style={{ filter: "brightness(0.5)" }}
+        />
+        <image
+          className="mountBg"
+          xlinkHref="https://assets.codepen.io/721952/mountBg.png"
+          width="1200"
+          height="800"
+        />
+        <image
+          className="mountMg"
+          xlinkHref="https://assets.codepen.io/721952/mountMg.png"
+          width="1200"
+          height="800"
+        />
+        <image
+          className="cloud2"
+          xlinkHref="https://assets.codepen.io/721952/cloud2.png"
+          width="1200"
+          height="800"
+        />
+        <image
+          className="mountFg"
+          xlinkHref="https://assets.codepen.io/721952/mountFg.png"
+          width="1200"
+          height="800"
+        />
+        <image
+          className="cloud1"
+          xlinkHref="https://assets.codepen.io/721952/cloud1.png"
+          width="1200"
+          height="800"
+        />
+        <image
+          className="cloud3"
+          xlinkHref="https://assets.codepen.io/721952/cloud3.png"
+          width="1200"
+          height="800"
+        />
+        <text fill="#fff" x="350" y="200">
+          EXPLORE
+        </text>
+        <polyline
+          className="arrow"
+          fill="#fff"
+          points="599,250 599,289 590,279 590,282 600,292 610,282 610,279 601,289 601,250"
+        />
+
+        <g mask="url(#m)">
+          <rect fill="#fff" width="100%" height="100%" />
+          <text x="350" y="200" fill="#162a43">
+            FURTHER
+          </text>
+          <text x="300" y="350" fill="#162a43" fontSize="80">
+            Get Quote Now
+          </text>
+          <text x="3500" y="400" fill="#162a43" fontSize={80}>
+            Go beyound
+          </text>
+          <clipPath id="text-overlay" width="100%" height="100%">
+            <text x="280" y="500" fill="#003658" fontSize={120}>
+              Go Xtreme
+            </text>
+          </clipPath>
+
+          <defs>
+            <linearGradient id="grad1" x1="0%" x2="100%" y1="0%" y2="0%">
+              <stop offset="0%" stop-color="yellow" />
+              <stop offset="100%" stop-color="red" />
+            </linearGradient>
+          </defs>
+          <rect
+            width={650}
+            height={100}
+            x={280}
+            y={400}
+            fill="url(#grad1)"
+            clipPath="url(#text-overlay)"
+          ></rect>
+        </g>
+
+        <rect
+          id="arrow-btn"
+          width="100"
+          height="100"
+          opacity="0"
+          x="550"
+          y="220"
+        />
+      </svg>
+      {/* <svg
         className="bg-white"
         viewBox="0 0 1200 800"
         xmlns="http://www.w3.org/2000/svg"
@@ -179,7 +267,7 @@ const ExpeditionCloud = () => {
           x="550"
           y="220"
         />
-      </svg>
+      </svg> */}
     </main>
   );
 };

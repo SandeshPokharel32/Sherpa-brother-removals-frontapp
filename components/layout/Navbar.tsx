@@ -1,224 +1,188 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import * as React from "react";
 import Link from "next/link";
-import { Menu, X, ChevronDown, MountainSnow, Phone } from "lucide-react";
+
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
 
-// Register the ScrollTrigger plugin
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
-
-const navLinks = [
+type Item = {
+  title: string;
+  href?: string;
+  description?: string;
+  subcategories?: { title: string; href?: string };
+};
+const menuItems: {
+  title: string;
+  href?: string;
+  description?: string;
+  subcategories?: Item[];
+}[] = [
   {
-    title: "Home",
-    href: "/",
+    title: "Ski/Board",
+    subcategories: [
+      { title: "Backcountry", href: "/ski-board/backcountry", description: "" },
+      { title: "Heli", href: "/ski-board/heli", description: "" },
+    ],
   },
   {
     title: "Expeditions",
-    href: "/expeditions",
-    subLinks: [
-      { title: "Summit Climbs", href: "/expeditions/summit-climbs" },
-      { title: "Trekking", href: "/expeditions/trekking" },
-      { title: "Skiing", href: "/expeditions/skiing" },
+    subcategories: [
+      // Top-level categories and links
+      { title: "All Expeditions", href: "/all-expeds" },
+      {
+        title: "Everest",
+        href: "/everest", // Link for the category landing page
+      },
+      {
+        title: "Kilimanjaro",
+        href: "/kilimanjaro-packages-with-eliteexped", // Link for the category landing page
+      },
+      {
+        title: "Combo Packages",
+        href: "/combo-packages", // Link for the category landing page
+      },
+      {
+        title: "Fast-Track",
+        href: "/fast-track", // Link for the category landing page
+      },
+      {
+        title: "8000m peaks",
+        href: "/8000m", // Link for the category landing page
+      },
+      {
+        title: "Seven Summits",
+        href: "/seven-summits", // Link for the category landing page
+      },
+      {
+        title: "6000m peaks",
+        href: "/6000m-peaks", // Link for the category landing page
+      },
+      {
+        title: "Uk Exped",
+        href: "/uk-exped-master-the-basics-with-elite-exped", // Link for the category landing page
+      },
+      // Featured items (can be placed at the top level of expeditions subcategories for prominence)
+      { title: "Featured: K2", href: "/k2" },
+      { title: "Featured: Kilimanjaro", href: "/kilimanjaro" },
     ],
   },
   {
-    title: "Regions",
-    href: "/regions",
-    subLinks: [
-      { title: "Himalayas", href: "/regions/himalayas" },
-      { title: "Alps", href: "/regions/alps" },
-      { title: "Andes", href: "/regions/andes" },
-      { title: "Alaska", href: "/regions/alaska" },
+    title: "Trekking",
+    subcategories: [
+      { title: "Example Sub 1", href: "/trekking/sub1", description: "" },
+      { title: "Example Sub 2", href: "/trekking/sub2", description: "" },
     ],
   },
   {
-    title: "Services",
-    href: "/services",
+    title: "Bike Tours",
+    subcategories: [
+      {
+        title: "Weekend Exclusives",
+        href: "/bike-tours/weekend",
+        description: "",
+      },
+    ],
   },
+  { title: "Workshops", href: "/workshops" },
+  { title: "Adventure", href: "/adventure" },
   {
-    title: "About",
-    href: "/about",
+    title: "Rentals & Shop",
+    subcategories: [
+      { title: "Rent", href: "/rentals/rent", description: "" },
+      { title: "Buy", href: "/rentals/buy", description: "" },
+    ],
   },
+  { title: "News & Events", href: "/news-events" },
+  { title: "About", href: "/about" },
+  { title: "Contact", href: "/contact" },
 ];
 
-export default function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
-  const toggleDropdown = (title: string) => {
-    setActiveDropdown(activeDropdown === title ? null : title);
-  };
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-
-    // Add scroll event listener
-    window.addEventListener("scroll", handleScroll);
-
-    // GSAP animation for navbar
-    gsap.fromTo(
-      "header",
-      { y: -100, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }
-    );
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
+export default function AdventureNavbar() {
   return (
-    <header
-      className={cn(
-        "fixed w-full z-50 transition-all duration-300 py-4",
-        isScrolled ? "bg-prussianBlue shadow-md py-2" : "bg-transparent"
-      )}
-    >
-      <div className="container-custom flex items-center justify-between">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 text-white">
-          <MountainSnow className="h-8 w-8" />
-          <span className="font-azosans font-bold text-xl tracking-wider">
-            SUMMIT
-          </span>
+    <nav className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+      <div className="flex-shrink-0">
+        <Link href="/" legacyBehavior passHref>
+          <a className="text-xl font-bold select-none">Xtreme</a>
         </Link>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <div key={link.title} className="relative group">
-              {link.subLinks ? (
-                <button
-                  className="text-white hover:text-blue-200 font-medium flex items-center gap-1 py-2"
-                  onClick={() => toggleDropdown(link.title)}
-                >
-                  {link.title}
-                  <ChevronDown className="h-4 w-4" />
-                </button>
-              ) : (
-                <Link
-                  href={link.href}
-                  className="text-white hover:text-blue-200 font-medium py-2"
-                >
-                  {link.title}
-                </Link>
-              )}
-
-              {/* Dropdown menu */}
-              {link.subLinks && (
-                <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg overflow-hidden transform opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-200 origin-top-left z-50">
-                  {link.subLinks.map((subLink) => (
-                    <Link
-                      key={subLink.title}
-                      href={subLink.href}
-                      className="block px-4 py-3 text-sm text-raisinBlack hover:bg-gray-100 transition-colors"
-                    >
-                      {subLink.title}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
-        </nav>
-
-        {/* Contact Button */}
-        <div className="hidden lg:flex items-center gap-4">
-          <Link
-            href="/contact"
-            className="flex items-center gap-2 text-white hover:text-blue-200"
-          >
-            contact
-          </Link>
-          <Button className="bg-blueLagoon hover:bg-blueLagoon/90 text-white font-medium">
-            Book Now
-          </Button>
-        </div>
-
-        {/* Mobile Menu Button */}
-        <button
-          className="lg:hidden text-white p-2"
-          onClick={toggleMenu}
-          aria-label="Toggle menu"
-        >
-          {isMenuOpen ? (
-            <X className="h-6 w-6" />
-          ) : (
-            <Menu className="h-6 w-6" />
-          )}
-        </button>
       </div>
 
-      {/* Mobile Navigation */}
-      {isMenuOpen && (
-        <div className="lg:hidden bg-prussianBlue absolute top-full left-0 right-0 shadow-lg">
-          <nav className="container-custom py-4">
-            {navLinks.map((link) => (
-              <div key={link.title} className="py-2">
-                {link.subLinks ? (
+      {/* Center: Navigation Menu */}
+      <div className="flex-1 flex justify-center">
+        <NavigationMenu>
+          <NavigationMenuList className="flex space-x-6">
+            {menuItems.map(({ title, href, subcategories }) => (
+              <NavigationMenuItem key={title}>
+                {subcategories && subcategories.length > 0 ? (
                   <>
-                    <button
-                      className="text-white w-full text-left flex items-center justify-between py-2"
-                      onClick={() => toggleDropdown(link.title)}
-                    >
-                      {link.title}
-                      <ChevronDown className="h-4 w-4" />
-                    </button>
-
-                    {activeDropdown === link.title && (
-                      <div className="pl-4 mt-2 space-y-2 border-l-2 border-blueLagoon">
-                        {link.subLinks.map((subLink) => (
-                          <Link
-                            key={subLink.title}
-                            href={subLink.href}
-                            className="block py-2 text-blue-100 hover:text-white"
-                            onClick={toggleMenu}
+                    <NavigationMenuTrigger>{title}</NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <ul className="grid gap-3 p-4 w-[300px] md:w-[400px]">
+                        {subcategories.map((sub) => (
+                          <ListItem
+                            key={sub.title}
+                            href={sub.href}
+                            title={sub.title}
                           >
-                            {subLink.title}
-                          </Link>
+                            <p className="text-sm leading-tight text-muted-foreground"></p>
+                          </ListItem>
                         ))}
-                      </div>
-                    )}
+                      </ul>
+                    </NavigationMenuContent>
                   </>
                 ) : (
-                  <Link
-                    href={link.href}
-                    className="block text-white py-2"
-                    onClick={toggleMenu}
-                  >
-                    {link.title}
+                  <Link href={href || "#"} legacyBehavior passHref>
+                    <NavigationMenuLink
+                      className={navigationMenuTriggerStyle()}
+                    >
+                      {title}
+                    </NavigationMenuLink>
                   </Link>
                 )}
-              </div>
+              </NavigationMenuItem>
             ))}
-            <div className="mt-4 border-t border-blueLagoon pt-4 flex flex-col gap-4">
-              <Link
-                href="/contact"
-                className="flex items-center gap-2 text-white"
-              >
-                <Phone className="h-4 w-4" />
-                <span>+1 (555) 123-4567</span>
-              </Link>
-              <Button className="bg-blueLagoon text-white">Book Now</Button>
-            </div>
-          </nav>
-        </div>
-      )}
-    </header>
+          </NavigationMenuList>
+        </NavigationMenu>
+      </div>
+
+      {/* Right: Empty or add other items here */}
+      <div className="flex-shrink-0" />
+    </nav>
   );
 }
+
+const ListItem = React.forwardRef<
+  React.ElementRef<"a">,
+  React.ComponentPropsWithoutRef<"a">
+>(({ className, title, children, ...props }, ref) => {
+  return (
+    <li>
+      <NavigationMenuLink asChild>
+        <a
+          ref={ref}
+          className={cn(
+            "block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            className
+          )}
+          {...props}
+        >
+          <div className="text-sm font-medium leading-none">{title}</div>
+          {children && (
+            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+              {children}
+            </p>
+          )}
+        </a>
+      </NavigationMenuLink>
+    </li>
+  );
+});
+ListItem.displayName = "ListItem";

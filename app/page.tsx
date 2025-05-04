@@ -11,8 +11,13 @@ export default function Home() {
   return (
     <div className="relative">
       <HeroSlider />
-      {/* <ExpeditionCloud /> */}
-      <ExpeditionTypes />
+      <div className="relative pb-40">
+        <ExpeditionCloud />
+        <div className="w-full relative md:absolute bottom-0">
+          <ExpeditionTypes />
+        </div>
+      </div>
+
       <FeaturedExpeditions />
       <RegionsSection />
       <ServicesSection />

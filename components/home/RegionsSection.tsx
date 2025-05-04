@@ -1,65 +1,71 @@
 "use client";
 
-import { useEffect, useRef } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useEffect, useRef } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 // Register ScrollTrigger
-if (typeof window !== 'undefined') {
+if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
 const regions = [
   {
     id: 1,
-    name: 'Himalayas',
-    description: 'Home to the world\'s highest peaks including Mount Everest, K2, and Annapurna.',
+    name: "Himalayas",
+    description:
+      "Home to the world's highest peaks including Mount Everest, K2, and Annapurna.",
     expeditionCount: 15,
-    image: 'https://images.pexels.com/photos/1659438/pexels-photo-1659438.jpeg',
-    link: '/regions/himalayas',
+    image: "https://images.pexels.com/photos/1659438/pexels-photo-1659438.jpeg",
+    link: "/regions/himalayas",
   },
   {
     id: 2,
-    name: 'European Alps',
-    description: 'Stunning mountain range stretching across France, Switzerland, Italy, and Austria.',
+    name: "European Alps",
+    description:
+      "Stunning mountain range stretching across France, Switzerland, Italy, and Austria.",
     expeditionCount: 12,
-    image: 'https://images.pexels.com/photos/1366909/pexels-photo-1366909.jpeg',
-    link: '/regions/alps',
+    image: "https://images.pexels.com/photos/1366909/pexels-photo-1366909.jpeg",
+    link: "/regions/alps",
   },
   {
     id: 3,
-    name: 'Andes',
-    description: 'The world\'s longest mountain range, running through seven South American countries.',
+    name: "Andes",
+    description:
+      "The world's longest mountain range, running through seven South American countries.",
     expeditionCount: 8,
-    image: 'https://images.pexels.com/photos/97906/pexels-photo-97906.jpeg',
-    link: '/regions/andes',
+    image: "https://images.pexels.com/photos/97906/pexels-photo-97906.jpeg",
+    link: "/regions/andes",
   },
   {
     id: 4,
-    name: 'Alaska Range',
-    description: 'Magnificent wilderness featuring Denali, the highest peak in North America.',
+    name: "Alaska Range",
+    description:
+      "Magnificent wilderness featuring Denali, the highest peak in North America.",
     expeditionCount: 6,
-    image: 'https://images.pexels.com/photos/2098428/pexels-photo-2098428.jpeg',
-    link: '/regions/alaska',
+    image: "https://images.pexels.com/photos/2098428/pexels-photo-2098428.jpeg",
+    link: "/regions/alaska",
   },
   {
     id: 5,
-    name: 'Rocky Mountains',
-    description: 'Spectacular mountain system of western North America known for diverse landscapes.',
+    name: "Rocky Mountains",
+    description:
+      "Spectacular mountain system of western North America known for diverse landscapes.",
     expeditionCount: 9,
-    image: 'https://images.pexels.com/photos/618833/pexels-photo-618833.jpeg',
-    link: '/regions/rockies',
+    image: "https://images.pexels.com/photos/618833/pexels-photo-618833.jpeg",
+    link: "/regions/rockies",
   },
   {
     id: 6,
-    name: 'Caucasus',
-    description: 'Mountain system at the intersection of Europe and Asia featuring diverse cultures.',
+    name: "Caucasus",
+    description:
+      "Mountain system at the intersection of Europe and Asia featuring diverse cultures.",
     expeditionCount: 5,
-    image: 'https://images.pexels.com/photos/4496593/pexels-photo-4496593.jpeg',
-    link: '/regions/caucasus',
+    image: "https://images.pexels.com/photos/4496593/pexels-photo-4496593.jpeg",
+    link: "/regions/caucasus",
   },
 ];
 
@@ -68,55 +74,12 @@ export default function RegionsSection() {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
-  useEffect(() => {
-    const section = sectionRef.current;
-    const heading = headingRef.current;
-    const cards = cardsRef.current;
-
-    if (section && heading && cards.length) {
-      // Heading animation
-      gsap.fromTo(
-        heading,
-        { y: 50, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          scrollTrigger: {
-            trigger: section,
-            start: 'top 80%',
-          },
-        }
-      );
-
-      // Cards animation
-      cards.forEach((card, index) => {
-        if (card) {
-          gsap.fromTo(
-            card,
-            { y: 30, opacity: 0 },
-            {
-              y: 0,
-              opacity: 1,
-              duration: 0.6,
-              delay: 0.1 * index,
-              scrollTrigger: {
-                trigger: card,
-                start: 'top 85%',
-              },
-            }
-          );
-        }
-      });
-    }
-  }, []);
-
   return (
     <section ref={sectionRef} className="py-20 bg-white">
       <div className="container-custom">
-        <h2 
-          ref={headingRef} 
-          className="text-4xl font-bold text-center mb-16 text-raisinBlack"
+        <h2
+          ref={headingRef}
+          className="text-7xl font-bold text-center mb-16 text-raisinBlack"
         >
           Explore by Region
         </h2>
@@ -139,10 +102,16 @@ export default function RegionsSection() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
                   <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <h3 className="text-2xl font-bold text-white mb-2">{region.name}</h3>
-                    <p className="text-gray-200 text-sm mb-3 line-clamp-2">{region.description}</p>
+                    <h3 className="text-2xl font-bold text-white mb-2">
+                      {region.name}
+                    </h3>
+                    <p className="text-gray-200 text-sm mb-3 line-clamp-2">
+                      {region.description}
+                    </p>
                     <div className="flex justify-between items-center">
-                      <span className="text-white text-sm">{region.expeditionCount} expeditions</span>
+                      <span className="text-white text-sm">
+                        {region.expeditionCount} expeditions
+                      </span>
                       <div className="bg-blueLagoon rounded-full p-1 transform transition-transform duration-300 group-hover:translate-x-1">
                         <ArrowRight className="h-4 w-4 text-white" />
                       </div>

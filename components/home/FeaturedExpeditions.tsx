@@ -71,56 +71,14 @@ export default function FeaturedExpeditions() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
-  useEffect(() => {
-    const section = sectionRef.current;
-    const cards = cardsRef.current;
-
-    if (section && cards.length) {
-      // Heading animation
-      gsap.fromTo(
-        section.querySelector(".section-heading"),
-        { y: 50, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          scrollTrigger: {
-            trigger: section,
-            start: "top 80%",
-          },
-        }
-      );
-
-      // Cards animation
-      cards.forEach((card, index) => {
-        if (card) {
-          gsap.fromTo(
-            card,
-            { y: 50, opacity: 0 },
-            {
-              y: 0,
-              opacity: 1,
-              duration: 0.8,
-              delay: 0.1 * index,
-              scrollTrigger: {
-                trigger: card,
-                start: "top 85%",
-              },
-            }
-          );
-        }
-      });
-    }
-  }, []);
-
   return (
     <section ref={sectionRef} className="py-20 bg-gray-50">
       <div className="container-custom">
         <div className="text-center mb-16">
-          <h2 className="section-heading text-4xl font-bold mb-4 text-raisinBlack">
+          <h2 className="section-heading text-7xl font-bold mb-4 text-raisinBlack">
             Featured Summit Expeditions
           </h2>
-          <p className="text-gray-600 max-w-3xl mx-auto">
+          <p className="text-gray-600 text-lg max-w-3xl mx-auto">
             Embark on a life-changing journey with our most popular mountain
             expeditions. Led by certified guides with years of experience
             ensuring your safety and success.
@@ -165,7 +123,7 @@ export default function FeaturedExpeditions() {
                   </div>
                 </div>
 
-                <div className="flex items-center mb-4">
+                {/* <div className="flex items-center mb-4">
                   <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                   <span className="ml-1 text-gray-700 font-medium">
                     {expedition.rating}
@@ -173,7 +131,7 @@ export default function FeaturedExpeditions() {
                   <span className="ml-1 text-gray-500 text-sm">
                     ({expedition.reviews} reviews)
                   </span>
-                </div>
+                </div> */}
 
                 <div className="flex justify-between items-center">
                   {/* <span className="text-lg font-bold text-prussianBlue">{expedition.price}</span> */}

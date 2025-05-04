@@ -5,14 +5,23 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
 import { useGSAP } from "@gsap/react";
 import { Button } from "../ui/button";
+import { Typewriter } from "react-simple-typewriter";
 
 // Register ScrollTrigger and useGSAP outside of the component
 gsap.registerPlugin(ScrollTrigger);
 
 const videos = [
   {
+    src: "/videos/4.mp4",
+    heading: ["MT.DENALI", "EXPED AT"],
+    body: "Expedition of Nepal's highest peak with a thrilling adventure.",
+    cta: "Get Details",
+    className: "top",
+    code: "4",
+  },
+  {
     src: "/videos/1.mp4",
-    heading: "MT. LHOTSE EXPED.",
+    heading: ["MT.LHOTSE.", "EXPED AT"],
     body: "Expedition to the fourth highest mountain in the world, scheduled for April - May (Spring) 2025",
     cta: "Learn More",
     code: "1",
@@ -20,7 +29,7 @@ const videos = [
   },
   {
     src: "/videos/2.mp4",
-    heading: "MT. EVEREST EXPED.",
+    heading: ["MT.EVEREST.", "EXPED AT"],
     body: "Conquer the highest peak on Earth with expert guides and support.",
     cta: "Join Now",
     className: "top",
@@ -28,19 +37,11 @@ const videos = [
   },
   {
     src: "/videos/3.mp4",
-    heading: "MT. K2 EXPED.",
+    heading: ["MT.K2.", "EXPED AT"],
     body: "Challenge yourself on the second highest mountain, known for its difficulty.",
     cta: "Discover More",
     className: "bottom",
     code: "3",
-  },
-  {
-    src: "/videos/4.mp4",
-    heading: "MT. DENALI EXPED.",
-    body: "Explore North America's highest peak with a thrilling adventure.",
-    cta: "Get Details",
-    className: "top",
-    code: "4",
   },
 ];
 
@@ -78,15 +79,13 @@ export default function HorizontalVideoSlider() {
           start: "top top", // Pin starts when the top of the container hits the top of the viewport
           end: () => `+=${container.offsetHeight}`, // Pin ends after scrolling the height of the container
           scrub: 0.5, // Scrub the animation based on scroll
-          pin: true, // Pin the container
-          pinSpacing: true, // Avoid extra spacing
-          anticipatePin: 1,
           snap: {
             snapTo: 1 / (totalVideos - 1),
             duration: { min: 0.2, max: 0.3 },
             delay: 0.1,
             ease: "power1.inOut",
           },
+          pin: true,
           id: "horizontalScroll",
           // markers: true, // Uncomment for debugging ScrollTrigger
         },
@@ -102,13 +101,15 @@ export default function HorizontalVideoSlider() {
     >
       <div
         ref={horizontalRef}
-        className="flex h-full relative"
-        style={{ width: `${videos.length * 100}vw`, willChange: "transform" }}
+        className="flex !h-screen w-screen relative"
+        style={{
+          width: `${100 * videos.length}vw`,
+        }}
       >
         {videos.map(({ src, heading, body, cta, code }) => (
           <div
             key={code}
-            className="flex relative w-screen h-full flex-shrink-0 p-1"
+            className="flex relative w-screen h-screen flex-shrink-0"
           >
             <div className="relative h-full w-full rounded-sm overflow-hidden">
               <video
@@ -119,14 +120,23 @@ export default function HorizontalVideoSlider() {
                 loop
                 playsInline
               />
-              <div className="absolute top-0 z-10 bottom-0 left-0 right-0 bg-black/25"></div>
+              {/* <div className="absolute top-0 z-10 bottom-0 left-0 right-0 bg-black/25"></div> */}
             </div>
             <div className="absolute w-full inset-0 z-30 flex flex-wrap items-end justify-between px-8 py-20 md:px-20">
               <div className="text-left">
-                <h1 className="text-white font-bold text-4xl sm:text-5xl md:text-6xl leading-tight font-sans">
-                  {heading}
+                <h1 className="text-white font-bold text-4xl sm:text-5xl  leading-tight font-sans md:text-[12.75rem] uppercase">
+                  {" "}
+                  <Typewriter
+                    words={heading}
+                    loop={Infinity}
+                    cursor
+                    cursorStyle="_"
+                    typeSpeed={90}
+                    deleteSpeed={40}
+                    delaySpeed={1200}
+                  />
                 </h1>
-                <p className="mt-4 text-foreground text-sm sm:text-base font-light">
+                <p className="mt-4 text-foreground  sm:text-base font-light md:text-[3rem]">
                   {body}
                 </p>
               </div>

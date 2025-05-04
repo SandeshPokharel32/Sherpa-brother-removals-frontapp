@@ -1,20 +1,16 @@
 "use client";
-import { Crown } from "lucide-react";
 import React from "react";
+import { FloatingWhatsApp } from "react-floating-whatsapp";
 
 import "react-whatsapp-widget/dist/index.css";
 
 const ChatBot = () => {
   return (
     <div className="z-[200]">
-      {/* <WhatsAppWidget
-        className="z-[100]"
-        CompanyIcon={Crown}
-        phoneNumber="9779851235820"
-        companyName="Extreme Summit "
-        message="Hello! How can we help you?"
-        style={{ zIndex: 9999 }}
-        buttonClassName="z-[999]"
+      {/* <FloatingWhatsApp
+        phoneNumber="+9779860609417"
+        accountName="Xtreme Adventure Helpline"
+        chatMessage={`Welcome to Xtreme Adventure!Ready to take your thrill-seeking ?`}
       /> */}
     </div>
   );
