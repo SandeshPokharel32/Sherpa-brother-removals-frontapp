@@ -114,6 +114,41 @@
   }
 }
 
+@layer utilities {
+  .cls-1,
+  .cls-2 {
+    fill: #003658;
+  }
+
+  .cls-3 {
+    clip-path: url(#clippath-7);
+  }
+
+  .cls-4 {
+    clip-path: url(#clippath-8);
+  }
+
+  .cls-5 {
+    clip-path: url(#clippath-6);
+  }
+
+  .cls-6 {
+    clip-path: url(#clippath-5);
+  }
+
+  .cls-7 {
+    clip-path: url(#clippath-9);
+  }
+
+  .cls-2,
+  .cls-8 {
+    stroke-width: 0px;
+  }
+
+  .cls-8 {
+    fill: #006e7f;
+  }
+}
 /* Hide scrollbar for Chrome, Safari and Opera */
 .no-scrollbar::-webkit-scrollbar {
   display: none;

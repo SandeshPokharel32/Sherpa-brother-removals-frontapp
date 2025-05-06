@@ -136,7 +136,7 @@ export default function HorizontalVideoSlider() {
                     delaySpeed={1200}
                   />
                 </h1>
-                <p className="mt-4 text-foreground  sm:text-base font-light md:text-[3rem]">
+                <p className="mt-4 text-foreground leading-loose md:leading-snug  sm:text-base font-light md:text-[3rem]">
                   {body}
                 </p>
               </div>
