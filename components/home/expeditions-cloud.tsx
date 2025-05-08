@@ -23,21 +23,6 @@ const ExpeditionCloud = () => {
 
   useGSAP(
     () => {
-      gsap.to(".cloud2", {
-        y: "-=20", // moves up by 30px
-        duration: 3,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
-      gsap.to(".cloud3", {
-        y: "-=20", // moves up by 30px
-        duration: 3,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
-
       const tl = gsap
         .timeline({
           scrollTrigger: {
@@ -56,14 +41,6 @@ const ExpeditionCloud = () => {
         .fromTo(".mountBg", { y: -10 }, { y: -100 }, 0)
         .fromTo(".mountMg", { y: -30 }, { y: -250 }, 0)
         .fromTo(".mountFg", { y: -50 }, { y: -600 }, 0);
-
-      // tl.fromTo(refs.sky.current, { y: 0 }, { y: -200 }, 0)
-      //   .fromTo(refs.cloud1.current, { y: 100 }, { y: -800 }, 0)
-      //   .fromTo(refs.cloud2.current, { y: -150 }, { y: -1200 }, 0)
-      //   .fromTo(refs.cloud3.current, { y: -50 }, { y: -650 }, 0)
-      //   .fromTo(refs.mountBg.current, { y: -10 }, { y: -100 }, 0)
-      //   .fromTo(refs.mountMg.current, { y: -30 }, { y: -250 }, 0)
-      //   .fromTo(refs.mountFg.current, { y: -50 }, { y: -200 }, 0);
     },
     { scope: mainRef }
   );
@@ -163,8 +140,8 @@ const ExpeditionCloud = () => {
 
           <defs>
             <linearGradient id="grad1" x1="0%" x2="100%" y1="0%" y2="0%">
-              <stop offset="0%" stop-color="yellow" />
-              <stop offset="100%" stop-color="red" />
+              <stop offset="0%" stopColor="yellow" />
+              <stop offset="100%" stopColor="red" />
             </linearGradient>
           </defs>
           <rect

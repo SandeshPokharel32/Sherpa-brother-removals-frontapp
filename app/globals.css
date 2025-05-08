@@ -115,6 +115,35 @@
 }
 
 @layer utilities {
+  .headroom {
+    /* Initially transparent and fixed */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999; /* Ensure it's above other content */
+    transition: background-color 200ms ease-in-out; /* Add a smooth transition for the background */
+  }
+
+  .headroom--unfixed {
+    position: relative;
+    transform: translateY(0); /* Ensure it's not translated when unfixed */
+  }
+
+  .headroom--scrolled {
+    background-color: white; /* White background when scrolled */
+  }
+
+  .headroom--unpinned {
+    position: fixed;
+    transform: translateY(-100%);
+  }
+
+  .headroom--pinned {
+    position: fixed;
+    transform: translateY(0%);
+  }
+
   .cls-1,
   .cls-2 {
     fill: #003658;
