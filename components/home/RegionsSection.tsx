@@ -75,7 +75,7 @@ export default function RegionsSection() {
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   return (
-    <section ref={sectionRef} className="py-20 bg-white">
+    <section ref={sectionRef} className=" pt-10 md:py-20 bg-white">
       <div className="container-custom">
         <h2
           ref={headingRef}

@@ -124,7 +124,7 @@ export default function HorizontalVideoSlider() {
             </div>
             <div className="absolute w-full inset-0 z-30 flex flex-wrap items-end justify-between px-8 py-20 md:px-20">
               <div className="text-left">
-                <h1 className="text-white font-bold text-5xl sm:text-[5rem]   md:text-[8.75rem] lg:text-[10.75rem]  xl:text-[12.75rem]  leading-tight font-sans uppercase">
+                <h1 className="text-white font-bold text-6xl sm:text-[5rem] md:text-[8.75rem] lg:text-[10.75rem]  xl:text-[12.75rem]  leading-tight font-sans uppercase">
                   {" "}
                   <Typewriter
                     words={heading}
@@ -136,7 +136,7 @@ export default function HorizontalVideoSlider() {
                     delaySpeed={1200}
                   />
                 </h1>
-                <p className="mt-4 text-white leading-loose md:leading-snug  sm:text-base font-light md:text-[3rem]">
+                <p className="mt-4 text-white leading-loose md:leading-snug text-2xl sm:text-3xl md:text-[3rem] font-light ">
                   {body}
                 </p>
               </div>
