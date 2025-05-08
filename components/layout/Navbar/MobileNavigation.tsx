@@ -64,7 +64,7 @@ const NestedAccordionItem = ({
           {title}
         </AccordionTrigger>
         <AccordionContent>
-          <div className="border-l-2 border-muted pl-4">
+          <div className=" border-muted pl-4">
             <Accordion type="single" collapsible className="w-full">
               {subcategories.map((subItem) => (
                 <NestedAccordionItem
@@ -120,7 +120,7 @@ const MobileNavigation = ({ menuItems }: Props) => {
         </Button>
       </DrawerTrigger>
 
-      <DrawerContent className="rounded-none min-h-[600px] h-[700px]">
+      <DrawerContent className="rounded-none max-h-[80vh]">
         <DrawerHeader>
           <DrawerTitle>Explore Adventures</DrawerTitle>
         </DrawerHeader>

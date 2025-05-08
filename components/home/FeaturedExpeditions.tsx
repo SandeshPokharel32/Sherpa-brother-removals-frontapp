@@ -75,7 +75,7 @@ export default function FeaturedExpeditions() {
     <section ref={sectionRef} className="py-20 bg-gray-50">
       <div className="container-custom">
         <div className="text-center mb-16">
-          <h2 className="section-heading text-7xl font-bold mb-4 text-raisinBlack">
+          <h2 className="section-heading text-5xl sm:text-7xl font-bold mb-4 text-raisinBlack">
             Featured Summit Expeditions
           </h2>
           <p className="text-gray-600 text-lg max-w-3xl mx-auto">

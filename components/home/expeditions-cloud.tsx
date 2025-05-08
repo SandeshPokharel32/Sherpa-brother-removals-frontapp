@@ -48,7 +48,7 @@ const ExpeditionCloud = () => {
   return (
     <main
       ref={mainRef}
-      className="min-h-screen relative"
+      className=" relative"
       style={{ fontSize: "99px", fontWeight: 900 }}
     >
       <svg

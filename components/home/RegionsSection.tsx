@@ -79,7 +79,7 @@ export default function RegionsSection() {
       <div className="container-custom">
         <h2
           ref={headingRef}
-          className="text-7xl font-bold text-center mb-16 text-raisinBlack"
+          className="text-5xl sm:text-7xl font-bold text-center mb-16 text-raisinBlack"
         >
           Explore by Region
         </h2>
