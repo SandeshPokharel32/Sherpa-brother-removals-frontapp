@@ -67,7 +67,7 @@ export default function ServicesSection() {
       <div className="container-custom">
         <h2
           ref={titleRef}
-          className="text-7xl font-bold text-center mb-16 text-raisinBlack"
+          className="text-5xl sm:text-7xl font-bold text-center mb-16 text-raisinBlack"
         >
           Services We Offer
         </h2>

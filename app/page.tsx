@@ -11,13 +11,10 @@ export default function Home() {
   return (
     <div className="relative">
       <HeroSlider />
-      <div className="relative pb-40">
+      <div className="relative pb-40 hidden sm:block">
         <ExpeditionCloud />
-        <div className="w-full relative md:absolute bottom-0">
-          <ExpeditionTypes />
-        </div>
       </div>
-
+      <ExpeditionTypes />
       <FeaturedExpeditions />
       <RegionsSection />
       <ServicesSection />

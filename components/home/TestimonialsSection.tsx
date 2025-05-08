@@ -54,7 +54,7 @@ export default function TestimonialsSection() {
       <div className="container-custom">
         <h2
           ref={headingRef}
-          className="text-7xl font-bold text-center mb-16 text-white"
+          className="text-5xl sm:text-7xl font-bold text-center mb-16 text-white"
         >
           What Our Adventurers Say
         </h2>

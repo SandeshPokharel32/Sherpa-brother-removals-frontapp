@@ -111,7 +111,7 @@ export default function HorizontalVideoSlider() {
             key={code}
             className="flex relative w-screen h-screen flex-shrink-0"
           >
-            <div className="relative h-full w-full rounded-sm overflow-hidden">
+            <div className="relative h-full w-fulloverflow-hidden">
               <video
                 src={src}
                 className="w-full h-full object-cover opacity-90"
@@ -124,7 +124,7 @@ export default function HorizontalVideoSlider() {
             </div>
             <div className="absolute w-full inset-0 z-30 flex flex-wrap items-end justify-between px-8 py-20 md:px-20">
               <div className="text-left">
-                <h1 className="text-white font-bold text-4xl sm:text-5xl  leading-tight font-sans md:text-[12.75rem] uppercase">
+                <h1 className="text-white font-bold text-5xl sm:text-[5rem]   md:text-[8.75rem] lg:text-[10.75rem]  xl:text-[12.75rem]  leading-tight font-sans uppercase">
                   {" "}
                   <Typewriter
                     words={heading}
@@ -136,7 +136,7 @@ export default function HorizontalVideoSlider() {
                     delaySpeed={1200}
                   />
                 </h1>
-                <p className="mt-4 text-foreground leading-loose md:leading-snug  sm:text-base font-light md:text-[3rem]">
+                <p className="mt-4 text-white leading-loose md:leading-snug  sm:text-base font-light md:text-[3rem]">
                   {body}
                 </p>
               </div>
