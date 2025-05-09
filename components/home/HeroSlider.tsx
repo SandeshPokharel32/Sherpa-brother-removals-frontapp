@@ -111,7 +111,7 @@ export default function HorizontalVideoSlider() {
             key={code}
             className="flex relative w-screen h-screen flex-shrink-0"
           >
-            <div className="relative h-full w-fulloverflow-hidden">
+            <div className="relative h-full w-full overflow-hidden">
               <video
                 src={src}
                 className="w-full h-full object-cover opacity-90"
