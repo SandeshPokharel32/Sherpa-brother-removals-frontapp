@@ -54,12 +54,12 @@ export default function TestimonialsSection() {
       <div className="container-custom">
         <h2
           ref={headingRef}
-          className="text-7xl font-bold text-center mb-16 text-white"
+          className="text-5xl sm:text-7xl font-bold text-center mb-16 text-white"
         >
           What Our Adventurers Say
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {testimonials.map((testimonial, index) => (
             <div
               key={testimonial.id}
