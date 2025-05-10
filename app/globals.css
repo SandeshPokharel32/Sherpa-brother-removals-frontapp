@@ -37,7 +37,7 @@
   h4,
   h5,
   h6 {
-    @apply font-azosans tracking-tight;
+    @apply tracking-tight;
   }
   h1 {
     @apply text-4xl sm:text-5xl md:text-6xl leading-tight;
