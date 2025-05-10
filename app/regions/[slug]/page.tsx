@@ -209,12 +209,13 @@ export async function generateStaticParams() {
 }
 
 type RegionParams = {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 };
 
-export default function RegionPage({ params }: RegionParams) {
+export default async function RegionPage(props: RegionParams) {
+  const params = await props.params;
   const { slug } = params;
 
   if (!regions[slug as keyof typeof regions]) {

@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -149,13 +147,13 @@
     fill: #006e7f;
   }
 }
-.headroom {
-  @apply fixed top-0 left-0 right-0 z-[100000] text-white bg-transparent;
-  transition: transform 200ms ease-in-out;
 
-  svg {
-    fill: white;
-  }
+.headroom {
+  @apply fixed top-0 left-0 right-0 z-[100000] text-white bg-white bg-opacity-5 backdrop-blur-[2px];
+  transition: transform 200ms ease-in-out;
+}
+.headroom svg {
+  fill: white;
 }
 
 .headroom--scrolled {
@@ -168,16 +166,27 @@
 
 .headroom--pinned {
   transform: translateY(0%);
-  .svgBlue {
-    @apply fill-[#003658];
-  }
-  .svgDark {
-    @apply fill-[#006E7F];
-  }
+}
+
+.headroom--pinned .svgBlue {
+  @apply fill-[#003658];
+}
+.headroom--pinned .svgDark {
+  @apply fill-[#006E7F];
 }
 
 .headroom-disable-animation {
   transition: none !important; /* Disable all transitions */
+}
+
+iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 100%;
+  object-fit: fill;
+  transform: translate(-50%, -50%);
+  aspect-ratio: 16/ 9;
 }
 
 /* Smooth scrolling */

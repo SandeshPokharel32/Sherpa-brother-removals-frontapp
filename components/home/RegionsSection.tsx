@@ -88,7 +88,9 @@ export default function RegionsSection() {
           {regions.map((region, index) => (
             <div
               key={region.id}
-              ref={(el) => (cardsRef.current[index] = el)}
+              ref={(el) => {
+                cardsRef.current[index] = el;
+              }}
               className="region-card group cursor-pointer"
             >
               <Link href={region.link}>

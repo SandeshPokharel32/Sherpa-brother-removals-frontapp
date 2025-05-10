@@ -11,15 +11,16 @@ import { fetchExpeditionCategories } from "@/lib/contentful";
 export default async function Home() {
   const data = await fetchExpeditionCategories();
   console.log({ data });
+
   return (
     <div className="relative">
-      <HeroSlider />
+      {/* <HeroSlider /> */}
       <div className="relative hidden sm:block">
-        <ExpeditionCloud />
+        {/* <ExpeditionCloud /> */}
       </div>
-      <ExpeditionTypes />
-      <FeaturedExpeditions />
-      <RegionsSection />
+      <ExpeditionTypes data={data} />
+      <FeaturedExpeditions data={data} />
+      <RegionsSection  />
       <ServicesSection />
       <TestimonialsSection />
       <CtaSection />

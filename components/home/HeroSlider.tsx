@@ -6,21 +6,23 @@ import Link from "next/link";
 import { useGSAP } from "@gsap/react";
 import { Button } from "../ui/button";
 import { Typewriter } from "react-simple-typewriter";
+import Script from "next/script";
 
 // Register ScrollTrigger and useGSAP outside of the component
 gsap.registerPlugin(ScrollTrigger);
 
 const videos = [
   {
-    src: "/videos/4.mp4",
-    heading: ["MT.DENALI", "EXPED AT"],
-    body: "Expedition of Nepal's highest peak with a thrilling adventure.",
-    cta: "Get Details",
-    className: "top",
-    code: "4",
+    src: "https://player.vimeo.com/video/1082858873?h=35a8a9370f&autoplay=1&loop=1&title=0&byline=0&portrait=0&background=1&badge=0&autopause=0&app_id=58479",
+    heading: ["MT.K2.", "EXPED AT"],
+    body: "Challenge yourself on the second highest mountain, known for its difficulty.",
+    cta: "Discover More",
+    className: "bottom",
+    code: "3",
   },
+
   {
-    src: "/videos/1.mp4",
+    src: "https://player.vimeo.com/video/1082858993?h=aa655ae605&autoplay=1&loop=1&title=0&byline=0&portrait=0&background=1&badge=0&autopause=0&app_id=58479",
     heading: ["MT.LHOTSE.", "EXPED AT"],
     body: "Expedition to the fourth highest mountain in the world, scheduled for April - May (Spring) 2025",
     cta: "Learn More",
@@ -28,7 +30,7 @@ const videos = [
     className: "bottom",
   },
   {
-    src: "/videos/2.mp4",
+    src: "https://player.vimeo.com/video/1082858929?h=7029cbd455&autoplay=1&loop=1&title=0&byline=0&portrait=0&background=1&badge=0&autopause=0&app_id=58479",
     heading: ["MT.EVEREST.", "EXPED AT"],
     body: "Conquer the highest peak on Earth with expert guides and support.",
     cta: "Join Now",
@@ -36,12 +38,12 @@ const videos = [
     code: "2",
   },
   {
-    src: "/videos/3.mp4",
-    heading: ["MT.K2.", "EXPED AT"],
-    body: "Challenge yourself on the second highest mountain, known for its difficulty.",
-    cta: "Discover More",
-    className: "bottom",
-    code: "3",
+    src: "https://player.vimeo.com/video/1082859023?h=2d53c06647&autoplay=1&loop=1&controls=0&title=0&portrait=1&background=1&badge=0&autopause=0&app_id=58479",
+    heading: ["MT.DENALI", "EXPED AT"],
+    body: "Expedition of Nepal's highest peak with a thrilling adventure.",
+    cta: "Get Details",
+    className: "top",
+    code: "4",
   },
 ];
 
@@ -111,20 +113,18 @@ export default function HorizontalVideoSlider() {
             key={code}
             className="flex relative w-screen h-screen flex-shrink-0"
           >
-            <div className="relative h-full w-full overflow-hidden">
-              <video
+            <div className="relative h-full w-full overflow-hidden bg-[#c3c3c3]">
+              <iframe
+                frameBorder="0"
                 src={src}
-                className="w-full h-full object-cover opacity-90"
-                autoPlay
-                muted
-                loop
-                playsInline
-              />
-              {/* <div className="absolute top-0 z-10 bottom-0 left-0 right-0 bg-black/25"></div> */}
+                allow="autoplay; clipboard-write; encrypted-media"
+                className="absolute border-0"
+                title="Help Center Video"
+              ></iframe>
             </div>
             <div className="absolute w-full inset-0 z-30 flex flex-wrap items-end justify-between px-8 py-20 md:px-20">
               <div className="text-left">
-                <h1 className="text-white font-bold text-6xl sm:text-[5rem] md:text-[8.75rem] lg:text-[10.75rem]  xl:text-[12.75rem]  leading-tight font-sans uppercase">
+                <h1 className="text-white font-bold text-6xl sm:text-[5rem] md:text-[8.75rem] lg:text-[10.75rem] xl:text-[12.75rem] leading-tight font-sans uppercase">
                   {" "}
                   <Typewriter
                     words={heading}
@@ -149,6 +149,7 @@ export default function HorizontalVideoSlider() {
           </div>
         ))}
       </div>
+      <Script src="https://player.vimeo.com/api/player.js"></Script>
     </div>
   );
 }

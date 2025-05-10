@@ -144,7 +144,7 @@ export default function AdventureNavbar() {
     >
       <nav className="flex items-center justify-between px-6 py-4  w-full">
         <div className="flex justify-center items-center flex-shrink-0 w-40 relative">
-          <Link href="/" legacyBehavior passHref>
+          <Link href="/" passHref>
             <svg
               width="120"
               height="40"
@@ -315,7 +315,7 @@ export default function AdventureNavbar() {
                       </NavigationMenuContent>
                     </>
                   ) : (
-                    <Link href={href || "#"} legacyBehavior passHref>
+                    <Link href={href || "#"} passHref>
                       <NavigationMenuLink
                         className={navigationMenuTriggerStyle()}
                       >
