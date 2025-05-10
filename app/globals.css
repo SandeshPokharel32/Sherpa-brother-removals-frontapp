@@ -31,9 +31,6 @@
 }
 
 @layer base {
-  body {
-    @apply bg-background text-foreground font-inter;
-  }
   h1,
   h2,
   h3,
