@@ -128,7 +128,7 @@
   }
 
   .headroom--scrolled {
-    @apply bg-white text-black bg-clip-border backdrop-filter-none backdrop-blur-none bg-opacity-100;
+    @apply bg-white text-black bg-clip-border backdrop-filter-none backdrop-blur-none;
   }
 
   .headroom--unpinned {
