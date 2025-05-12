@@ -1,7 +1,9 @@
 "use client";
-
 import * as React from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+import { motion } from "framer-motion";
+import { ArrowLeft } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import {
@@ -14,125 +16,32 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import { AnimatePresence, motion } from "framer-motion";
-import { ArrowLeft } from "lucide-react";
-import Headroom from "react-headroom";
+
 import MobileNavigation from "./MobileNavigation";
+import {
+  Expedition,
+  ExpeditionCategory,
+  ExpeditionTypesQuery,
+} from "@/graphql/types";
+
+const Headroom = dynamic(() => import("react-headroom"));
 
 export type Item = {
   title: string;
   href?: string;
   description?: string;
+  slug?: string;
   subcategories?: { title: string; href?: string; description?: string }[];
 };
-const menuItems: {
-  title: string;
-  href?: string;
-  description?: string;
-  subcategories?: Item[];
-}[] = [
-  {
-    title: "Ski/Board",
-    subcategories: [
-      { title: "Backcountry", href: "/ski-board/backcountry", description: "" },
-      { title: "Heli", href: "/ski-board/heli", description: "" },
-    ],
-  },
-  {
-    title: "Expeditions",
-    subcategories: [
-      // Top-level categories and links
-      {
-        title: "Everest",
-        href: "/everest", // Link for the category landing page
-        description: "Everest expedition",
-        subcategories: [
-          {
-            title: "Everest camp",
-            href: "/everest", // Link for the category landing page
-            description: "Everest expedition",
-          },
-          {
-            title: "Kilimanjaro camp 2",
-            href: "/kilimanjaro-packages-with-eliteexped", // Link for the category landing page
-            description: "Kilimanjaro expedition",
-          },
-        ],
-      },
-      {
-        title: "Kilimanjaro",
-        href: "/kilimanjaro-packages-with-eliteexped", // Link for the category landing page
-        description: "Kilimanjaro expedition",
-      },
-      {
-        title: "Combo Packages",
-        href: "/combo-packages", // Link for the category landing page
-        description: "Combo Package expedition",
-      },
-      {
-        title: "Fast-Track",
-        href: "/fast-track", // Link for the category landing page
-        description: "Fast track expedition",
-      },
-      {
-        title: "8000m peaks",
-        href: "/8000m", // Link for the category landing page
-        description: "8000ers expedition",
-      },
-      {
-        title: "Seven Summits",
-        href: "/seven-summits", // Link for the category landing page
-        description: "Seven summits expedition",
-      },
-      {
-        title: "6000m peaks",
-        href: "/6000m-peaks", // Link for the category landing page
-        description: "6000metere above expeditions",
-      },
-      {
-        title: "Uk Exped",
-        href: "/uk-exped-master-the-basics-with-elite-exped", // Link for the category landing page
-        description: "UK expeditions",
-      },
-      // Featured items (can be placed at the top level of expeditions subcategories for prominence)
-      {
-        title: "Featured: K2",
-        href: "/k2",
 
-        description: "k2 expeditions",
-      },
-      {
-        title: "Featured: Kilimanjaro",
-        href: "/kilimanjaro",
+export default function AdventureNavbar({
+  data,
+}: {
+  data: ExpeditionTypesQuery | null;
+}) {
+  const [activeCategory, setActiveCategory] =
+    React.useState<ExpeditionCategory | null>(null);
 
-        description: "Featured Kilimanjaro expeditions",
-      },
-    ],
-  },
-  {
-    title: "Trekking",
-    subcategories: [
-      { title: "Example Sub 1", href: "/trekking/sub1", description: "" },
-      { title: "Example Sub 2", href: "/trekking/sub2", description: "" },
-    ],
-  },
-  {
-    title: "Bike Tours",
-    subcategories: [
-      {
-        title: "Weekend Exclusives",
-        href: "/bike-tours/weekend",
-        description: "",
-      },
-    ],
-  },
-];
-
-export default function AdventureNavbar() {
-  const [activeCategory, setActiveCategory] = React.useState<
-    { title: string; slug: string; description: string }[] | null
-  >(null);
   return (
     <Headroom
       wrapperStyle={{
@@ -140,6 +49,7 @@ export default function AdventureNavbar() {
         top: "0",
         right: "0",
         left: "0",
+        zIndex: "100000",
       }}
     >
       <nav className="flex items-center justify-between px-6 py-4  w-full">
@@ -224,30 +134,29 @@ export default function AdventureNavbar() {
           </Link>
         </div>
 
-        {/* Center: Navigation Menu */}
+        {/* Mobile Navigation */}
         <div className="block md:hidden">
-          <MobileNavigation menuItems={menuItems} />
+          <MobileNavigation menuItems={data} />
         </div>
+
+        {/* Desktop Navigation */}
         <div className="flex-1 hidden justify-center md:flex">
           <NavigationMenu
-            className="z-[100000]"
+            className="z-100000"
             onValueChange={() => setActiveCategory(null)}
           >
             <NavigationMenuList className="flex space-x-6">
-              {menuItems.map(({ title, href, subcategories }) => (
-                <NavigationMenuItem key={title}>
-                  {subcategories && subcategories.length > 0 ? (
+              {data?.types?.items.map(({ name, slug, categories }) => (
+                <NavigationMenuItem key={slug}>
+                  {categories?.items && categories?.items.length > 0 ? (
                     <>
-                      <NavigationMenuTrigger>{title}</NavigationMenuTrigger>
+                      <NavigationMenuTrigger>{name}</NavigationMenuTrigger>
                       <NavigationMenuContent>
                         {activeCategory ? (
                           <motion.div
                             key="category-list"
                             initial={{ x: "100%", opacity: 1 }}
-                            animate={{
-                              x: 0,
-                              opacity: 1,
-                            }}
+                            animate={{ x: 0, opacity: 1 }}
                             exit={{ x: "100%", opacity: 0 }}
                             transition={{ duration: 0.5 }}
                             className="w-full"
@@ -257,69 +166,57 @@ export default function AdventureNavbar() {
                                 variant="outline"
                                 className="rounded-full mr-10"
                                 size="icon"
-                                onClick={() => {
-                                  setActiveCategory(null);
-                                }}
+                                onClick={() => setActiveCategory(null)}
                               >
                                 <ArrowLeft />
                               </Button>
 
-                              <h2 className="text-2xl">Everest Region</h2>
-                              <span></span>
+                              <h2 className="text-2xl">
+                                {activeCategory?.name || ""}
+                              </h2>
                             </div>
-                            <ul className="relative grid grid-cols-3 gap-3 p-4 w-full min-w-[600px]">
-                              {subcategories.map((sub) => (
-                                <ListItem
-                                  title={sub.title}
-                                  key={sub.title}
-                                  href={sub.href}
-                                >
-                                  <p className="text-sm leading-tight text-muted-foreground">
-                                    {sub?.description}
-                                  </p>
-                                </ListItem>
-                              ))}
+                            <ul className="relative grid grid-cols-3 gap-3 p-4 md:min-w-[300px] lg:min-w-[600px]">
+                              {activeCategory?.expeditions?.items.map(
+                                (expedition: Expedition) => (
+                                  <ListItem
+                                    title={expedition?.title || ""}
+                                    key={expedition?.slug || ""}
+                                    href={`/expedition/${
+                                      expedition?.slug || ""
+                                    }`}
+                                  >
+                                    {expedition?.subtitle}
+                                  </ListItem>
+                                )
+                              )}
                             </ul>
                           </motion.div>
                         ) : (
                           <motion.ul
                             initial={{ x: "0", opacity: 0 }}
-                            animate={{
-                              x: 0,
-                              opacity: 1,
-                            }}
+                            animate={{ x: 0, opacity: 1 }}
                             transition={{ duration: 0.2 }}
-                            className="relative grid grid-cols-3 gap-3 p-4 w-full min-w-[600px]"
+                            className="relative grid grid-cols-2 lg:grid-cols-3 gap-3 p-4 w-full  min-w-[300px] lg:min-w-[600px]"
                           >
-                            {subcategories.map((sub) => (
-                              <ListItem
-                                title={sub.title}
-                                key={sub.title}
-                                onClick={() => {
-                                  setActiveCategory([
-                                    {
-                                      title: "test",
-                                      slug: "test",
-                                      description: "test",
-                                    },
-                                  ]);
-                                }}
-                              >
-                                <p className="text-xs leading-tight text-muted-foreground">
-                                  {sub?.description}
-                                </p>
-                              </ListItem>
-                            ))}
+                            {categories.items.map(
+                              (category: ExpeditionCategory) => (
+                                <ListItem
+                                  title={category?.name || ""}
+                                  key={category.slug}
+                                  onClick={() => setActiveCategory(category)}
+                                />
+                              )
+                            )}
                           </motion.ul>
                         )}
                       </NavigationMenuContent>
                     </>
                   ) : (
-                    <Link href={href || "#"} passHref>
+                    <Link href={`/region/${slug || ""}`} passHref>
                       <NavigationMenuLink
                         className={navigationMenuTriggerStyle()}
                       >
-                        {title}
+                        {name}
                       </NavigationMenuLink>
                     </Link>
                   )}
@@ -350,7 +247,7 @@ const ListItem = React.forwardRef<
         >
           <div className="text-sm font-medium leading-none">{title}</div>
           {children && (
-            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+            <p className="line-clamp-2 text-sm leading-tight text-muted-foreground">
               {children}
             </p>
           )}

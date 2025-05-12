@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef } from "react"; // Removed useState for ctx as useGSAP handles context
+import React, { useRef, useState } from "react"; // Removed useState for ctx as useGSAP handles context
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
@@ -7,6 +7,8 @@ import { useGSAP } from "@gsap/react";
 import { Button } from "../ui/button";
 import { Typewriter } from "react-simple-typewriter";
 import Script from "next/script";
+import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 // Register ScrollTrigger and useGSAP outside of the component
 gsap.registerPlugin(ScrollTrigger);
@@ -103,53 +105,84 @@ export default function HorizontalVideoSlider() {
     >
       <div
         ref={horizontalRef}
-        className="flex !h-screen w-screen relative"
+        className="flex h-screen! w-screen relative"
         style={{
           width: `${100 * videos.length}vw`,
         }}
       >
         {videos.map(({ src, heading, body, cta, code }) => (
-          <div
+          <VideoItem
             key={code}
-            className="flex relative w-screen h-screen flex-shrink-0"
-          >
-            <div className="relative h-full w-full overflow-hidden bg-[#c3c3c3]">
-              <iframe
-                frameBorder="0"
-                src={src}
-                allow="autoplay; clipboard-write; encrypted-media"
-                className="absolute border-0"
-                title="Help Center Video"
-              ></iframe>
-            </div>
-            <div className="absolute w-full inset-0 z-30 flex flex-wrap items-end justify-between px-8 py-20 md:px-20">
-              <div className="text-left">
-                <h1 className="text-white font-bold text-6xl sm:text-[5rem] md:text-[8.75rem] lg:text-[10.75rem] xl:text-[12.75rem] leading-tight font-sans uppercase">
-                  {" "}
-                  <Typewriter
-                    words={heading}
-                    loop={Infinity}
-                    cursor
-                    cursorStyle="_"
-                    typeSpeed={90}
-                    deleteSpeed={40}
-                    delaySpeed={1200}
-                  />
-                </h1>
-                <p className="mt-4 text-white leading-loose md:leading-snug text-2xl sm:text-3xl md:text-[3rem] font-light ">
-                  {body}
-                </p>
-              </div>
-              <Link href="/book-a-trip">
-                <Button variant="outline" className="rounded-full">
-                  {cta} <span className="ml-2">»</span>
-                </Button>
-              </Link>
-            </div>
-          </div>
+            code={code}
+            src={src}
+            heading={heading}
+            body={body}
+            cta={cta}
+          />
         ))}
       </div>
       <Script src="https://player.vimeo.com/api/player.js"></Script>
     </div>
   );
 }
+
+// Define the props type for VideoItem
+interface VideoItemProps {
+  code: string;
+  src: string;
+  heading: string[];
+  body: string;
+  cta: string;
+}
+
+const VideoItem = ({ code, src, heading, body, cta }: VideoItemProps) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  return (
+    <div key={code} className="flex relative w-screen h-screen shrink-0">
+      <div className="relative h-full w-full overflow-hidden bg-[#c3c3c3]">
+        <Image
+          alt="mountain"
+          src={`/images/video-fallback.png`}
+          fill
+          className="z-5"
+          objectFit="cover"
+          priority
+        />
+        <iframe
+          onLoad={() => setIsLoaded(true)}
+          src={src}
+          allow="autoplay; clipboard-write; encrypted-media"
+          className={cn("vimeo-iframe z-10", {
+            "z-0": !isLoaded,
+          })}
+          title="Help Center Video"
+        ></iframe>
+      </div>
+      <div className="absolute w-full inset-0 z-30 flex flex-col md:flex-row items-start  md:items-end justify-end gap-10 md:justify-between md:justify-between px-8 py-10 md:px-20">
+        <div className="text-left">
+          <h1 className="text-white font-bold text-6xl sm:text-[5rem] md:text-[8.75rem] lg:text-[10.75rem] xl:text-[12.75rem] leading-tight font-sans uppercase">
+            {" "}
+            <Typewriter
+              words={heading}
+              loop={Infinity}
+              cursor
+              cursorStyle="_"
+              typeSpeed={90}
+              deleteSpeed={40}
+              delaySpeed={1200}
+            />
+          </h1>
+          <p className="mt-4 text-white leading-tight md:leading-snug text-xl sm:text-3xl md:text-[3rem] font-light ">
+            {body}
+          </p>
+        </div>
+        <Link href="/book-a-trip">
+          <Button variant="outline" className="rounded-full">
+            {cta} <span className="ml-2">»</span>
+          </Button>
+        </Link>
+      </div>
+    </div>
+  );
+};

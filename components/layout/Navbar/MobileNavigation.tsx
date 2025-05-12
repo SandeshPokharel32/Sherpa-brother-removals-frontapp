@@ -3,7 +3,6 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerDescription,
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
@@ -18,41 +17,34 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
-
-// Define the Item type directly in this file to avoid import issues
-export type Item = {
-  title: string;
-  href?: string;
-  description?: string;
-  subcategories?: Item[];
-};
+import {
+  Expedition,
+  ExpeditionCategory,
+  ExpeditionType,
+  ExpeditionTypesQuery,
+} from "@/graphql/types";
 
 // Define the Props type using the Item type
 type Props = {
-  menuItems: {
-    title: string;
-    href?: string;
-    description?: string;
-    subcategories?: Item[];
-  }[];
+  menuItems: ExpeditionTypesQuery | null;
 };
 
 // Recursive component to handle nested navigation
 const NestedAccordionItem = ({
   title,
-  href,
+  slug,
   description,
-  subcategories,
+  items,
   level = 1,
 }: {
   title: string;
-  href?: string;
+  slug: string;
   description?: string;
-  subcategories?: Item[];
+  items?: (Expedition | ExpeditionCategory)[];
   level?: number;
 }) => {
   // If item has subcategories, render a nested accordion
-  if (subcategories && subcategories.length > 0) {
+  if (items && items.length > 0) {
     return (
       <AccordionItem value={title}>
         <AccordionTrigger
@@ -64,17 +56,32 @@ const NestedAccordionItem = ({
           {title}
         </AccordionTrigger>
         <AccordionContent>
-          <div className=" border-muted pl-4">
+          <div className=" pl-4 border-l border-solid border-muted">
             <Accordion type="single" collapsible className="w-full">
-              {subcategories.map((subItem) => (
-                <NestedAccordionItem
-                  key={subItem.title}
-                  title={subItem.title}
-                  href={subItem.href}
-                  description={subItem.description}
-                  subcategories={subItem.subcategories}
-                />
-              ))}
+              {items?.map((item) => {
+                return (
+                  <NestedAccordionItem
+                    key={item.slug}
+                    title={
+                      (item?.__typename === "Expedition"
+                        ? item?.title
+                        : item?.name) || ""
+                    }
+                    slug={item?.slug || ""}
+                    description={
+                      (item?.__typename === "Expedition"
+                        ? item?.subtitle
+                        : "") || ""
+                    }
+                    items={
+                      item?.__typename === "Expedition"
+                        ? []
+                        : item?.expeditions?.items
+                    }
+                    level={level + 1}
+                  />
+                );
+              })}
             </Accordion>
           </div>
         </AccordionContent>
@@ -82,21 +89,29 @@ const NestedAccordionItem = ({
     );
   }
 
-  // If item has no subcategories, render as a link
+  const href =
+    level == 1
+      ? `/region/${slug}`
+      : level == 2
+      ? `/region/${slug}`
+      : `/expedition/${slug}`;
+
   return (
     <div className="py-1">
-      {href ? (
-        <Link
-          href={href}
-          className="block py-2 text-sm transition-colors hover:text-primary"
-        >
-          {title}
-          {description && (
-            <span className="block text-xs text-muted-foreground">
-              {description}
-            </span>
-          )}
-        </Link>
+      {slug ? (
+        <DrawerClose asChild>
+          <Link
+            href={href}
+            className="block py-2 text-sm transition-colors hover:text-primary"
+          >
+            {title}
+            {description && (
+              <span className="block text-xs text-muted-foreground">
+                {description}
+              </span>
+            )}
+          </Link>
+        </DrawerClose>
       ) : (
         <span className="block py-2 text-sm">
           {title}
@@ -126,13 +141,12 @@ const MobileNavigation = ({ menuItems }: Props) => {
         </DrawerHeader>
         <div className="px-4 pb-4 overflow-y-auto">
           <Accordion type="single" collapsible className="w-full">
-            {menuItems.map((item) => (
+            {menuItems?.types?.items.map((type: ExpeditionType) => (
               <NestedAccordionItem
-                key={item.title}
-                title={item.title}
-                href={item.href}
-                description={item.description}
-                subcategories={item.subcategories}
+                key={type.slug}
+                title={type?.name || ""}
+                slug={type?.slug || ""}
+                items={type?.categories?.items || []}
               />
             ))}
           </Accordion>

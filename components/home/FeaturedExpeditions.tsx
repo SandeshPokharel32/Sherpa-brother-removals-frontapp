@@ -95,7 +95,7 @@ export default function FeaturedExpeditions({
                 <div className="flex justify-between items-center">
                   <Link
                     href={`/expedition/${expedition.slug}`}
-                    className="btn-primary py-2 px-4 text-sm"
+                    className="bg-primary text-white rounded-md py-2 px-4 text-sm"
                   >
                     View Exped.
                   </Link>

@@ -85,7 +85,7 @@ export default function ServicesSection() {
               className="object-cover"
             />
             <div className="absolute inset-0 bg-prussianBlue/30"></div>
-            <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black to-transparent">
+            <div className="absolute bottom-0 left-0 right-0 p-8 bg-linear-to-t from-black to-transparent">
               <span className="text-white text-lg font-medium">
                 World-class expedition services
               </span>
