@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { MapPin, Calendar, Mountain, ArrowRight } from "lucide-react";
+import { Calendar, Mountain, ArrowRight } from "lucide-react";
+import { fetchCategoriesSlugs } from "@/graphql/api/fetchCategoriesSlugs";
+import { fetchCategoryBySlug } from "@/graphql/api/fetchCategoryBySlug";
 
 // This would typically come from a CMS or API
 const regions = {
@@ -205,7 +207,9 @@ const regions = {
 };
 
 export async function generateStaticParams() {
-  return Object.keys(regions).map((key) => ({ slug: key }));
+  const slugs = await fetchCategoriesSlugs();
+  console.log({ slugs });
+  return slugs;
 }
 
 type RegionParams = {
@@ -217,10 +221,13 @@ type RegionParams = {
 export default async function RegionPage(props: RegionParams) {
   const params = await props.params;
   const { slug } = params;
+  const pageData = await fetchCategoryBySlug(slug);
 
-  if (!regions[slug as keyof typeof regions]) {
-    notFound();
-  }
+  const { expeditionsCollection, name } = pageData;
+
+  // if (!regions[slug as keyof typeof regions]) {
+  //   notFound();
+  // }
 
   const region = regions[slug as keyof typeof regions];
 
@@ -229,12 +236,16 @@ export default async function RegionPage(props: RegionParams) {
       {/* Hero Section */}
       <div
         className="relative h-[50vh] md:h-[60vh] bg-cover bg-center"
-        style={{ backgroundImage: `url(${region.image})` }}
+        style={{
+          backgroundImage: `url(${
+            region?.image || "/images/fallback-image.jpeg"
+          })`,
+        }}
       >
         <div className="absolute inset-0 bg-linear-to-b from-raisinBlack/50 to-raisinBlack/80"></div>
         <div className="container-custom relative z-10 h-full flex flex-col justify-end pb-12">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
-            {region.name}
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black mb-4">
+            {name}
           </h1>
         </div>
       </div>
@@ -244,7 +255,7 @@ export default async function RegionPage(props: RegionParams) {
         <div className="container-custom">
           <div className="max-w-4xl">
             <p className="text-lg text-gray-700 leading-relaxed">
-              {region.description}
+              {/* {region.description} */}
             </p>
           </div>
         </div>
@@ -254,64 +265,69 @@ export default async function RegionPage(props: RegionParams) {
       <section className="py-16 bg-gray-50">
         <div className="container-custom">
           <h2 className="text-3xl font-bold mb-12 text-prussianBlue">
-            {region.name} Expeditions
+            {name} Expeditions
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {region.expeditions.map((expedition) => (
-              <Link
-                href={expedition.link}
-                key={expedition.id}
-                className="expedition-card bg-white rounded-lg overflow-hidden hover:shadow-lg"
-              >
-                <div className="relative h-48">
-                  <Image
-                    src={expedition.image}
-                    alt={expedition.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-5">
-                  <h3 className="text-xl font-bold mb-2 text-prussianBlue">
-                    {expedition.title}
-                  </h3>
-                  <p className="text-gray-600 text-sm mb-4">
-                    {expedition.description}
-                  </p>
+            {expeditionsCollection.items.map(
+              (expedition: any, index: number) => (
+                <Link
+                  href={expedition?.slug}
+                  key={index}
+                  className="expedition-card bg-white rounded-lg overflow-hidden hover:shadow-lg"
+                >
+                  <div className="relative h-48">
+                    <Image
+                      src={
+                        expedition?.mainImage?.url ||
+                        "/images/fallback-image.jpeg"
+                      }
+                      alt={expedition.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="p-5">
+                    <h3 className="text-xl font-bold mb-2 text-prussianBlue">
+                      {expedition.title}
+                    </h3>
+                    <p className="text-gray-600 text-sm mb-4">
+                      {expedition.subtitle}
+                    </p>
 
-                  <div className="flex flex-wrap gap-4 mb-4">
-                    <div className="flex items-center text-sm text-gray-600">
-                      <Calendar className="h-4 w-4 mr-1 text-blueLagoon" />
-                      {expedition.duration}
+                    <div className="flex flex-wrap gap-4 mb-4">
+                      <div className="flex items-center text-sm text-gray-600">
+                        <Calendar className="h-4 w-4 mr-1 text-blueLagoon" />
+                        {expedition.duration}
+                      </div>
+                      <div className="flex items-center text-sm text-gray-600">
+                        <Mountain className="h-4 w-4 mr-1 text-blueLagoon" />
+                        {expedition.difficulty}
+                      </div>
                     </div>
-                    <div className="flex items-center text-sm text-gray-600">
-                      <Mountain className="h-4 w-4 mr-1 text-blueLagoon" />
-                      {expedition.difficulty}
+
+                    <div className="flex items-center text-blueLagoon font-medium text-sm">
+                      View Details
+                      <ArrowRight className="ml-1 h-4 w-4" />
                     </div>
                   </div>
-
-                  <div className="flex items-center text-blueLagoon font-medium text-sm">
-                    View Details
-                    <ArrowRight className="ml-1 h-4 w-4" />
-                  </div>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              )
+            )}
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-prussianBlue text-white">
+      <section className="py-16 bg-prussianBlue text-black">
         <div className="container-custom text-center">
           <h2 className="text-3xl font-bold mb-4">
-            Plan Your {region.name} Adventure
+            Plan Your {name} Adventure
           </h2>
           <p className="max-w-2xl mx-auto mb-8">
             Our expert guides will help you create the perfect expedition in the{" "}
-            {region.name}. Contact us today to start planning your next mountain
+            {name}. Contact us today to start planning your next mountain
             adventure.
           </p>
           <Link href="/contact" className="btn-secondary">
