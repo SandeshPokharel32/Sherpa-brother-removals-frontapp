@@ -50,7 +50,7 @@ export default function TestimonialsSection() {
   const testimonialsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   return (
-    <section ref={sectionRef} className="py-20 bg-prussianBlue">
+    <section ref={sectionRef} className="py-20 bg-prussian-blue">
       <div className="container-custom">
         <h2
           ref={headingRef}
@@ -63,7 +63,9 @@ export default function TestimonialsSection() {
           {testimonials.map((testimonial, index) => (
             <div
               key={testimonial.id}
-              ref={(el) => (testimonialsRef.current[index] = el)}
+              ref={(el) => {
+                testimonialsRef.current[index] = el;
+              }}
               className="bg-white rounded-lg p-6 shadow-lg"
             >
               <div className="flex items-center mb-4">

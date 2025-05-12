@@ -6,7 +6,7 @@ import "react-whatsapp-widget/dist/index.css";
 
 const ChatBot = () => {
   return (
-    <div className="z-[200]">
+    <div className="z-200">
       {/* <FloatingWhatsApp
         phoneNumber="+977 985‑1235820"
         accountName="Extreme Adventure Helpline"

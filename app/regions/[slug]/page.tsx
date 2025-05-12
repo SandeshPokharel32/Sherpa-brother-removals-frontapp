@@ -209,12 +209,13 @@ export async function generateStaticParams() {
 }
 
 type RegionParams = {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 };
 
-export default function RegionPage({ params }: RegionParams) {
+export default async function RegionPage(props: RegionParams) {
+  const params = await props.params;
   const { slug } = params;
 
   if (!regions[slug as keyof typeof regions]) {
@@ -230,7 +231,7 @@ export default function RegionPage({ params }: RegionParams) {
         className="relative h-[50vh] md:h-[60vh] bg-cover bg-center"
         style={{ backgroundImage: `url(${region.image})` }}
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-raisinBlack/50 to-raisinBlack/80"></div>
+        <div className="absolute inset-0 bg-linear-to-b from-raisinBlack/50 to-raisinBlack/80"></div>
         <div className="container-custom relative z-10 h-full flex flex-col justify-end pb-12">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
             {region.name}

@@ -6,16 +6,19 @@ import ServicesSection from "@/components/home/ServicesSection";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
 import CtaSection from "@/components/home/CtaSection";
 import ExpeditionCloud from "@/components/home/expeditions-cloud";
+import { fetchExpeditionTypes } from "@/graphql/api/fetchExpeditionTypes";
 
-export default function Home() {
+export default async function Home() {
+  const data = await fetchExpeditionTypes();
+
   return (
     <div className="relative">
       <HeroSlider />
-      <div className="relative hidden sm:block">
+      <div className="relative">
         <ExpeditionCloud />
       </div>
-      <ExpeditionTypes />
-      <FeaturedExpeditions />
+      <ExpeditionTypes data={data} />
+      <FeaturedExpeditions data={data} />
       <RegionsSection />
       <ServicesSection />
       <TestimonialsSection />

@@ -1,14 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import Link from "next/link";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-// Register ScrollTrigger
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 export default function CtaSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -23,7 +16,7 @@ export default function CtaSection() {
           "url(https://images.pexels.com/photos/2356059/pexels-photo-2356059.jpeg)",
       }}
     >
-      <div className="absolute inset-0 bg-raisinBlack/70"></div>
+      <div className="absolute inset-0 bg-raisin-black/70"></div>
       <div className="container-custom relative z-10">
         <div
           ref={contentRef}

@@ -88,7 +88,9 @@ export default function RegionsSection() {
           {regions.map((region, index) => (
             <div
               key={region.id}
-              ref={(el) => (cardsRef.current[index] = el)}
+              ref={(el) => {
+                cardsRef.current[index] = el;
+              }}
               className="region-card group cursor-pointer"
             >
               <Link href={region.link}>
@@ -100,7 +102,7 @@ export default function RegionsSection() {
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                  <div className="absolute inset-0 bg-linear-to-t from-black/80 to-transparent"></div>
                   <div className="absolute bottom-0 left-0 right-0 p-6">
                     <h3 className="text-2xl font-bold text-white mb-2">
                       {region.name}
