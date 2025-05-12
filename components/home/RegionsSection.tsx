@@ -69,10 +69,30 @@ const regions = [
   },
 ];
 
-export default function RegionsSection() {
+export default function RegionsSection({
+  data,
+  dataSlug = "summit-expedition",
+  title = "Featured Summit Expeditions",
+  subtitle = "Embark on a life-changing journey with our most popular mountain expeditions. Led by certified guides with years of experienceensuring your safety and success.",
+  buttonText = "View Summit Expeditions",
+}: any) {
+  console.log("🚀 ~ data:", data);
   const sectionRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+
+  const summitType = data?.types?.items?.find(
+    (type: any) => type.slug === dataSlug
+  );
+
+  if (!summitType) return null;
+
+  const regions =
+    summitType.categories?.items?.flatMap((category: any) => {
+      return category || {};
+    }) || [];
+
+  if (regions.length === 0) return null;
 
   return (
     <section ref={sectionRef} className=" pt-10 md:py-20 bg-white">
@@ -85,19 +105,19 @@ export default function RegionsSection() {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {regions.map((region, index) => (
+          {regions.map((region: any, index: number) => (
             <div
-              key={region.id}
+              key={index}
               ref={(el) => {
                 cardsRef.current[index] = el;
               }}
               className="region-card group cursor-pointer"
             >
-              <Link href={region.link}>
+              <Link href={`/categories/${region?.slug || ""}`}>
                 <div className="relative h-72 overflow-hidden rounded-lg">
                   <Image
-                    src={region.image}
-                    alt={region.name}
+                    src={region?.image || "/images/fallback-image.jpeg"}
+                    alt={region?.name || "region-image"}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -108,11 +128,11 @@ export default function RegionsSection() {
                       {region.name}
                     </h3>
                     <p className="text-gray-200 text-sm mb-3 line-clamp-2">
-                      {region.description}
+                      {region?.description || ""}
                     </p>
                     <div className="flex justify-between items-center">
                       <span className="text-white text-sm">
-                        {region.expeditionCount} expeditions
+                        {region?.expeditions?.items?.length} expeditions
                       </span>
                       <div className="bg-blueLagoon rounded-full p-1 transform transition-transform duration-300 group-hover:translate-x-1">
                         <ArrowRight className="h-4 w-4 text-white" />

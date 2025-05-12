@@ -19,7 +19,7 @@ export default async function Home() {
       </div>
       <ExpeditionTypes data={data} />
       <FeaturedExpeditions data={data} />
-      <RegionsSection />
+      <RegionsSection data={data} />
       <ServicesSection />
       <TestimonialsSection />
       <CtaSection />
