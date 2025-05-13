@@ -49,3 +49,17 @@ export type ExpeditionTypeCollection = {
 export type ExpeditionTypesQuery = {
   types?: ExpeditionTypeCollection | null;
 };
+
+export type VideoContentItem = {
+  heading: string;
+  cta: string;
+  src: string;
+  mobileSrc: string;
+  description: string;
+};
+
+export type HeroSliderData = {
+  videoContentCollection: {
+    items: VideoContentItem[];
+  };
+};

@@ -16,11 +16,11 @@ export async function fetchCategoriesSlugs(): Promise<
   { slug: string | null | undefined }[]
 > {
   try {
-    const data = await graphQLClient.request<{
+    const data = await graphQLClient<{
       expeditionCategoryCollection: {
         items: { slug?: string | null }[];
       };
-    }>(CATEGORIES_SLUGS_QUERY);
+    }>({ query: CATEGORIES_SLUGS_QUERY });
 
     return data.expeditionCategoryCollection.items.map((item) => ({
       slug: item.slug,

@@ -31,9 +31,9 @@ export const NAVIGATION_ITEMS = gql`
 
 export async function fetchNavigationItems() {
   try {
-    const data = await graphQLClient.request<ExpeditionTypesQuery>(
-      NAVIGATION_ITEMS
-    );
+    const data = await graphQLClient<ExpeditionTypesQuery>({
+      query: NAVIGATION_ITEMS,
+    });
 
     return data;
   } catch (e) {

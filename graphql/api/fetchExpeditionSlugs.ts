@@ -13,9 +13,9 @@ export const EXPEDITION_SLUGS_QUERY = gql`
 
 export async function fetchExpeditionSlugs(): Promise<string[]> {
   try {
-    const data = await graphQLClient.request<{
+    const data = await graphQLClient<{
       expeditionCollection: { items: { slug?: string | null }[] };
-    }>(EXPEDITION_SLUGS_QUERY);
+    }>({ query: EXPEDITION_SLUGS_QUERY });
 
     return data.expeditionCollection.items
       .map((item) => item.slug)

@@ -7,13 +7,15 @@ import TestimonialsSection from "@/components/home/TestimonialsSection";
 import CtaSection from "@/components/home/CtaSection";
 import ExpeditionCloud from "@/components/home/expeditions-cloud";
 import { fetchExpeditionTypes } from "@/graphql/api/fetchExpeditionTypes";
+import { fetchHeroSlider } from "@/graphql/api/fetchHeroSlider";
 
 export default async function Home() {
   const data = await fetchExpeditionTypes();
+  const heroSliderData = await fetchHeroSlider();
 
   return (
     <div className="relative">
-      <HeroSlider />
+      <HeroSlider data={heroSliderData} />
       <div className="relative">
         <ExpeditionCloud />
       </div>

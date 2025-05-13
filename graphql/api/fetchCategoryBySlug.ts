@@ -24,9 +24,9 @@ export const EXPEDITION_BY_SLUG_QUERY = gql`
 
 export async function fetchCategoryBySlug(slug: string) {
   try {
-    const data = await graphQLClient.request<{
+    const data = await graphQLClient<{
       expeditionCategoryCollection: { items: any[] };
-    }>(EXPEDITION_BY_SLUG_QUERY, { slug });
+    }>({ query: EXPEDITION_BY_SLUG_QUERY, variables: { slug } });
 
     return data.expeditionCategoryCollection.items[0] || null;
   } catch (error) {

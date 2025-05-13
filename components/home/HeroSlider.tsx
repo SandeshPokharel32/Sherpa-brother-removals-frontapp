@@ -1,5 +1,6 @@
 "use client";
-import React, { useRef, useState } from "react"; // Removed useState for ctx as useGSAP handles context
+
+import React, { useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
@@ -9,51 +10,21 @@ import { Typewriter } from "react-simple-typewriter";
 import Script from "next/script";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { HeroSliderData, VideoContentItem } from "@/graphql/types";
 
-// Register ScrollTrigger and useGSAP outside of the component
 gsap.registerPlugin(ScrollTrigger);
 
-const videos = [
-  {
-    src: "https://player.vimeo.com/video/1082858873?h=35a8a9370f&autoplay=1&loop=1&title=0&byline=0&portrait=0&background=1&badge=0&autopause=0&app_id=58479",
-    mobileSrc:
-      "https://player.vimeo.com/video/1083843060?h=f1cfca93c2&autoplay=1&loop=1&title=0&byline=0&portrait=0&background=1&badge=0&autopause=0&app_id=58479",
-    heading: ["MT.K2.", "EXPED AT"],
-    body: "Challenge yourself on the second highest mountain, known for its difficulty.",
-    cta: "Discover More",
-    className: "bottom",
-    code: "3",
-  },
+interface HorizontalVideoSliderProps {
+  data: HeroSliderData;
+}
 
-  {
-    src: "https://player.vimeo.com/video/1082858993?h=aa655ae605&autoplay=1&loop=1&title=0&byline=0&portrait=0&background=1&badge=0&autopause=0&app_id=58479",
-    heading: ["MT.LHOTSE.", "EXPED AT"],
-    body: "Expedition to the fourth highest mountain in the world, scheduled for April - May (Spring) 2025",
-    cta: "Learn More",
-    code: "1",
-    className: "bottom",
-  },
-  {
-    src: "https://player.vimeo.com/video/1082858929?h=7029cbd455&autoplay=1&loop=1&title=0&byline=0&portrait=0&background=1&badge=0&autopause=0&app_id=58479",
-    heading: ["MT.EVEREST.", "EXPED AT"],
-    body: "Conquer the highest peak on Earth with expert guides and support.",
-    cta: "Join Now",
-    className: "top",
-    code: "2",
-  },
-  {
-    src: "https://player.vimeo.com/video/1082859023?h=2d53c06647&autoplay=1&loop=1&controls=0&title=0&portrait=1&background=1&badge=0&autopause=0&app_id=58479",
-    heading: ["MT.DENALI", "EXPED AT"],
-    body: "Expedition of Nepal's highest peak with a thrilling adventure.",
-    cta: "Get Details",
-    className: "top",
-    code: "4",
-  },
-];
-
-export default function HorizontalVideoSlider() {
+export default function HorizontalVideoSlider({
+  data,
+}: HorizontalVideoSliderProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const horizontalRef = useRef<HTMLDivElement>(null);
+  // Use the items from data or fallback to empty array
+  const videos = data?.videoContentCollection?.items ?? [];
 
   useGSAP(
     () => {
@@ -66,18 +37,20 @@ export default function HorizontalVideoSlider() {
       }
 
       const totalVideos = videos.length;
+      if (totalVideos === 0) return;
+
       const viewportWidth = window.innerWidth;
       const scrollDistance = viewportWidth * (totalVideos - 1);
-      // Directly apply ScrollTrigger to the gsap.to animation
+
       gsap.to(horizontal, {
         x: -scrollDistance,
         ease: "none",
         immediateRender: false,
         scrollTrigger: {
           trigger: container,
-          start: "top top", // Pin starts when the top of the container hits the top of the viewport
-          end: () => `+=${container.offsetHeight}`, // Pin ends after scrolling the height of the container
-          scrub: 0.5, // Scrub the animation based on scroll
+          start: "top top",
+          end: () => `+=${container.offsetHeight}`,
+          scrub: 0.5,
           snap: {
             snapTo: 1 / (totalVideos - 1),
             duration: { min: 0.2, max: 0.3 },
@@ -86,7 +59,7 @@ export default function HorizontalVideoSlider() {
           },
           pin: true,
           id: "horizontalScroll",
-          // markers: true, // Uncomment for debugging ScrollTrigger
+          // markers: true, // Uncomment for debugging
         },
       });
     },
@@ -100,36 +73,35 @@ export default function HorizontalVideoSlider() {
     >
       <div
         ref={horizontalRef}
-        className="flex h-screen! w-screen relative"
+        className="flex h-screen w-screen relative"
         style={{
           width: `${100 * videos.length}vw`,
         }}
       >
-        {videos.map(({ src, mobileSrc, heading, body, cta, code }) => (
+        {videos.map(({ heading, cta, src, mobileSrc, description }, index) => (
           <VideoItem
-            mobileSrc={mobileSrc}
-            key={code}
-            code={code}
+            key={index}
+            code={String(index)}
             src={src}
-            heading={heading}
-            body={body}
+            mobileSrc={mobileSrc}
+            heading={Array.isArray(heading) ? heading : [heading]}
+            body={description}
             cta={cta}
           />
         ))}
       </div>
-      <Script src="https://player.vimeo.com/api/player.js"></Script>
+      <Script src="https://player.vimeo.com/api/player.js" />
     </div>
   );
 }
 
-// Define the props type for VideoItem
 interface VideoItemProps {
   code: string;
   src: string;
+  mobileSrc?: string;
   heading: string[];
   body: string;
   cta: string;
-  mobileSrc?: string;
 }
 
 const VideoItem = ({
@@ -146,10 +118,10 @@ const VideoItem = ({
       <div className="relative h-full w-full overflow-hidden bg-[#c3c3c3]">
         <Image
           alt="mountain"
-          src={`/images/video-fallback.png`}
+          src="/images/video-fallback.png"
           fill
           className="z-5"
-          objectFit="cover"
+          style={{ objectFit: "cover" }}
           priority
         />
         <iframe
@@ -160,21 +132,22 @@ const VideoItem = ({
             "z-0": !isLoaded,
           })}
           title="Help Center Video"
-        ></iframe>
-        <iframe
-          onLoad={() => setIsLoaded(true)}
-          src={mobileSrc}
-          allow="autoplay; clipboard-write; encrypted-media"
-          className={cn("vimeo-iframe z-10  block md:hidden", {
-            "z-0": !isLoaded,
-          })}
-          title="Help Center Video"
-        ></iframe>
+        />
+        {mobileSrc && (
+          <iframe
+            onLoad={() => setIsLoaded(true)}
+            src={mobileSrc}
+            allow="autoplay; clipboard-write; encrypted-media"
+            className={cn("vimeo-iframe z-10 block md:hidden", {
+              "z-0": !isLoaded,
+            })}
+            title="Help Center Video"
+          />
+        )}
       </div>
-      <div className="absolute w-full inset-0 z-30 flex flex-col md:flex-row items-start  md:items-end justify-end gap-10 md:justify-between md:justify-between px-8 py-10 md:px-20">
+      <div className="absolute w-full inset-0 z-30 flex flex-col md:flex-row items-start md:items-end justify-end gap-10 md:justify-between px-8 py-10 md:px-20">
         <div className="text-left">
           <h1 className="text-white font-bold text-6xl sm:text-[5rem] md:text-[8.75rem] lg:text-[10.75rem] xl:text-[12.75rem] leading-tight font-sans uppercase">
-            {" "}
             <Typewriter
               words={heading}
               loop={Infinity}
@@ -185,11 +158,11 @@ const VideoItem = ({
               delaySpeed={1200}
             />
           </h1>
-          <p className="mt-4 text-white leading-tight md:leading-snug text-xl sm:text-3xl md:text-[3rem] font-light ">
+          <p className="mt-4 text-white leading-tight md:leading-snug text-xl sm:text-3xl md:text-[3rem] font-light">
             {body}
           </p>
         </div>
-        <Link href="/book-a-trip">
+        <Link href="/book-a-trip" passHref>
           <Button variant="outline" className="rounded-full">
             {cta} <span className="ml-2">»</span>
           </Button>

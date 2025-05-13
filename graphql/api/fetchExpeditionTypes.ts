@@ -45,9 +45,9 @@ export const EXPEDITION_TYPES_QUERY = gql`
 
 export async function fetchExpeditionTypes() {
   try {
-    const data = await graphQLClient.request<ExpeditionTypesQuery>(
-      EXPEDITION_TYPES_QUERY
-    );
+    const data = await graphQLClient<ExpeditionTypesQuery>({
+      query: EXPEDITION_TYPES_QUERY,
+    });
 
     return data;
   } catch (e) {

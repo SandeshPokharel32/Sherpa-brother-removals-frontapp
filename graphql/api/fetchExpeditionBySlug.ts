@@ -68,9 +68,9 @@ export const EXPEDITION_BY_SLUG_QUERY = gql`
 
 export async function fetchExpeditionBySlug(slug: string) {
   try {
-    const data = await graphQLClient.request<{
+    const data = await graphQLClient<{
       expeditionCollection: { items: any[] };
-    }>(EXPEDITION_BY_SLUG_QUERY, { slug });
+    }>({ query: EXPEDITION_BY_SLUG_QUERY, variables: { slug } });
 
     return data.expeditionCollection.items[0] || null;
   } catch (error) {
