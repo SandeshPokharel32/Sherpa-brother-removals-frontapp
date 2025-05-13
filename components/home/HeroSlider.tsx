@@ -17,7 +17,7 @@ const videos = [
   {
     src: "https://player.vimeo.com/video/1082858873?h=35a8a9370f&autoplay=1&loop=1&title=0&byline=0&portrait=0&background=1&badge=0&autopause=0&app_id=58479",
     mobileSrc:
-      "https://player.vimeo.com/video/1083839062?autoplay=1&loop=1&title=0&byline=0&portrait=0&background=1&badge=0&autopause=0&app_id=58479",
+      "https://player.vimeo.com/video/1083843060?h=f1cfca93c2&autoplay=1&loop=1&title=0&byline=0&portrait=0&background=1&badge=0&autopause=0&app_id=58479",
     heading: ["MT.K2.", "EXPED AT"],
     body: "Challenge yourself on the second highest mountain, known for its difficulty.",
     cta: "Discover More",
