@@ -22,7 +22,6 @@ type ExpeditionParams = {
 
 export async function generateStaticParams() {
   const slugs = await fetchExpeditionSlugs();
-  console.log({ slugs });
   return slugs.map((slug: string) => ({ slug }));
 }
 
@@ -47,7 +46,6 @@ export function BookingLink({ expedition }: { expedition: { title: string } }) {
 export default async function ExpeditionPage(props: ExpeditionParams) {
   const params = await props.params;
   const expedition = await fetchExpeditionBySlug(params.slug);
-  console.log({ expedition });
 
   if (!expedition) {
     notFound();

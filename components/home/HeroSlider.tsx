@@ -16,6 +16,8 @@ gsap.registerPlugin(ScrollTrigger);
 const videos = [
   {
     src: "https://player.vimeo.com/video/1082858873?h=35a8a9370f&autoplay=1&loop=1&title=0&byline=0&portrait=0&background=1&badge=0&autopause=0&app_id=58479",
+    mobileSrc:
+      "https://player.vimeo.com/video/1083839062?autoplay=1&loop=1&title=0&byline=0&portrait=0&background=1&badge=0&autopause=0&app_id=58479",
     heading: ["MT.K2.", "EXPED AT"],
     body: "Challenge yourself on the second highest mountain, known for its difficulty.",
     cta: "Discover More",
@@ -66,13 +68,6 @@ export default function HorizontalVideoSlider() {
       const totalVideos = videos.length;
       const viewportWidth = window.innerWidth;
       const scrollDistance = viewportWidth * (totalVideos - 1);
-
-      console.log("Initializing GSAP:", {
-        totalVideos,
-        viewportWidth,
-        scrollDistance,
-      });
-
       // Directly apply ScrollTrigger to the gsap.to animation
       gsap.to(horizontal, {
         x: -scrollDistance,
@@ -110,8 +105,9 @@ export default function HorizontalVideoSlider() {
           width: `${100 * videos.length}vw`,
         }}
       >
-        {videos.map(({ src, heading, body, cta, code }) => (
+        {videos.map(({ src, mobileSrc, heading, body, cta, code }) => (
           <VideoItem
+            mobileSrc={mobileSrc}
             key={code}
             code={code}
             src={src}
@@ -133,11 +129,18 @@ interface VideoItemProps {
   heading: string[];
   body: string;
   cta: string;
+  mobileSrc?: string;
 }
 
-const VideoItem = ({ code, src, heading, body, cta }: VideoItemProps) => {
+const VideoItem = ({
+  code,
+  src,
+  mobileSrc,
+  heading,
+  body,
+  cta,
+}: VideoItemProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
-
   return (
     <div key={code} className="flex relative w-screen h-screen shrink-0">
       <div className="relative h-full w-full overflow-hidden bg-[#c3c3c3]">
@@ -153,7 +156,16 @@ const VideoItem = ({ code, src, heading, body, cta }: VideoItemProps) => {
           onLoad={() => setIsLoaded(true)}
           src={src}
           allow="autoplay; clipboard-write; encrypted-media"
-          className={cn("vimeo-iframe z-10", {
+          className={cn("vimeo-iframe z-10 hidden md:block", {
+            "z-0": !isLoaded,
+          })}
+          title="Help Center Video"
+        ></iframe>
+        <iframe
+          onLoad={() => setIsLoaded(true)}
+          src={mobileSrc}
+          allow="autoplay; clipboard-write; encrypted-media"
+          className={cn("vimeo-iframe z-10  block md:hidden", {
             "z-0": !isLoaded,
           })}
           title="Help Center Video"

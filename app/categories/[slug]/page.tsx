@@ -208,7 +208,6 @@ const regions = {
 
 export async function generateStaticParams() {
   const slugs = await fetchCategoriesSlugs();
-  console.log({ slugs });
   return slugs;
 }
 

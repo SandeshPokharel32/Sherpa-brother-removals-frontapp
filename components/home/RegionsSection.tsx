@@ -76,7 +76,6 @@ export default function RegionsSection({
   subtitle = "Embark on a life-changing journey with our most popular mountain expeditions. Led by certified guides with years of experienceensuring your safety and success.",
   buttonText = "View Summit Expeditions",
 }: any) {
-  console.log("🚀 ~ data:", data);
   const sectionRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
