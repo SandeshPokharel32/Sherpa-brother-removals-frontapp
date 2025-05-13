@@ -7,10 +7,18 @@ export const EXPEDITION_BY_SLUG_QUERY = gql`
       items {
         slug
         name
+        description
+        type {
+          name
+          slug
+        }
         expeditionsCollection {
           items {
             title
             slug
+            altitude
+            groupSize
+            duration
             subtitle
             mainImage {
               url
