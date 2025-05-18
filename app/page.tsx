@@ -16,10 +16,10 @@ export default async function Home() {
 
   return (
     <div className="relative">
-      {/* <HeroSlider data={heroSliderData} /> */}
-      {/* <div className="relative">
+      <HeroSlider data={heroSliderData} />
+      <div className="relative">
         <ExpeditionCloud />
-      </div> */}
+      </div>
       <ExpeditionTypes data={data} />
       <FeaturedExpeditions data={data} />
       <RegionsSection data={data} />
