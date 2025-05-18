@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import {
   MountainSnow,
@@ -8,8 +9,35 @@ import {
   Phone,
   MapPin,
 } from "lucide-react";
+import BrandLogo from "./BrandLogo";
+import { ExpeditionTypesQuery } from "@/graphql/types";
 
-export default function Footer() {
+export type Item = {
+  title: string;
+  href?: string;
+  description?: string;
+  slug?: string;
+  subcategories?: { title: string; href?: string; description?: string }[];
+};
+
+export default function Footer({
+  data,
+}: {
+  data: ExpeditionTypesQuery | null;
+}) {
+  console.log("🚀 ~ data:", data);
+
+  const regionsData =
+    data?.types?.items?.flatMap((category: any) => {
+      return category.categories?.items || [];
+    }) || [];
+
+  const expeditionsData =
+    (regionsData.length > 0 && regionsData[0].expeditions?.items) || [];
+
+  console.log("🚀 ~ expeditionsData:", expeditionsData);
+  // console.log("🚀 ~ expeditionsData:", expeditionsData);
+  // console.log("🚀 ~ expeditionsData:", regionsData);
   return (
     <footer className="bg-raisin-black text-white pt-16 pb-8">
       <div className="container-custom">
@@ -17,10 +45,11 @@ export default function Footer() {
           {/* Logo and company info */}
           <div>
             <Link href="/" className="flex items-center gap-2 mb-4">
-              <MountainSnow className="h-8 w-8" />
+              {/* <MountainSnow className="h-8 w-8" />
               <span className="font-azosans font-bold text-xl tracking-wider">
                 SUMMIT
-              </span>
+              </span> */}
+              <BrandLogo />
             </Link>
             <p className="text-gray-300 mb-6">
               Professional mountain guides offering summit expeditions and
@@ -56,38 +85,18 @@ export default function Footer() {
           <div>
             <h4 className="font-azosans font-bold text-lg mb-4">Expeditions</h4>
             <ul className="space-y-3">
-              <li>
-                <Link
-                  href="/expeditions/summit-climbs"
-                  className="text-gray-300 hover:text-blueLagoon transition-colors"
-                >
-                  Summit Climbs
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/expeditions/trekking"
-                  className="text-gray-300 hover:text-blueLagoon transition-colors"
-                >
-                  Trekking Adventures
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/expeditions/skiing"
-                  className="text-gray-300 hover:text-blueLagoon transition-colors"
-                >
-                  Ski Touring
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/expeditions/custom"
-                  className="text-gray-300 hover:text-blueLagoon transition-colors"
-                >
-                  Custom Expeditions
-                </Link>
-              </li>
+              {expeditionsData.map((item: any) => {
+                return (
+                  <li key={item.slug}>
+                    <Link
+                      href={`/expedition/${item.slug}`}
+                      className="text-gray-300 hover:text-blueLagoon transition-colors"
+                    >
+                      {item.title}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
@@ -95,38 +104,17 @@ export default function Footer() {
           <div>
             <h4 className="font-azosans font-bold text-lg mb-4">Regions</h4>
             <ul className="space-y-3">
-              <li>
-                <Link
-                  href="/regions/himalayas"
-                  className="text-gray-300 hover:text-blueLagoon transition-colors"
-                >
-                  Himalayas
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/regions/alps"
-                  className="text-gray-300 hover:text-blueLagoon transition-colors"
-                >
-                  European Alps
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/regions/andes"
-                  className="text-gray-300 hover:text-blueLagoon transition-colors"
-                >
-                  Andes
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/regions/alaska"
-                  className="text-gray-300 hover:text-blueLagoon transition-colors"
-                >
-                  Alaska Range
-                </Link>
-              </li>
+              {regionsData.length > 0 &&
+                regionsData.map((item) => (
+                  <li key={item.slug}>
+                    <Link
+                      href={`/categories/${item.slug}`}
+                      className="text-gray-300 hover:text-blueLagoon transition-colors"
+                    >
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
             </ul>
           </div>
 

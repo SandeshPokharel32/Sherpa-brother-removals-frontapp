@@ -65,7 +65,7 @@ export default async function RootLayout({
         <ChatBot />
         <Navbar data={data} />
         <main>{children}</main>
-        <Footer />
+        <Footer data={data} />
       </body>
     </html>
   );

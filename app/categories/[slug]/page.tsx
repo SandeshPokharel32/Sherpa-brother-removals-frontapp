@@ -220,9 +220,11 @@ type RegionParams = {
 export default async function RegionPage(props: RegionParams) {
   const params = await props.params;
   const { slug } = params;
+  console.log("🚀 ~ RegionPage ~ slug:", slug);
   const pageData = await fetchCategoryBySlug(slug);
+  console.log("🚀 ~ RegionPage ~ pageData:", pageData);
 
-  const { expeditionsCollection, name } = pageData;
+  const { expeditionsCollection, name, description, type } = pageData;
 
   // if (!regions[slug as keyof typeof regions]) {
   //   notFound();
@@ -243,18 +245,21 @@ export default async function RegionPage(props: RegionParams) {
       >
         <div className="absolute inset-0 bg-linear-to-b from-raisinBlack/50 to-raisinBlack/80"></div>
         <div className="container-custom relative z-10 h-full flex flex-col justify-end pb-12">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black mb-4">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-prussian-blue mb-3">
             {name}
           </h1>
+          <h4 className="text-xl md:text-2xl lg:text-3xl mt-1">
+            {type?.name || ""}
+          </h4>
         </div>
       </div>
 
       {/* Description Section */}
       <section className="py-12 bg-white">
         <div className="container-custom">
-          <div className="max-w-4xl">
+          <div className="max-w-5xl">
             <p className="text-lg text-gray-700 leading-relaxed">
-              {/* {region.description} */}
+              {description || ""}
             </p>
           </div>
         </div>
@@ -268,52 +273,53 @@ export default async function RegionPage(props: RegionParams) {
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {expeditionsCollection.items.map(
-              (expedition: any, index: number) => (
-                <Link
-                  href={expedition?.slug}
-                  key={index}
-                  className="expedition-card bg-white rounded-lg overflow-hidden hover:shadow-lg"
-                >
-                  <div className="relative h-48">
-                    <Image
-                      src={
-                        expedition?.mainImage?.url ||
-                        "/images/fallback-image.jpeg"
-                      }
-                      alt={expedition.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="p-5">
-                    <h3 className="text-xl font-bold mb-2 text-prussianBlue">
-                      {expedition.title}
-                    </h3>
-                    <p className="text-gray-600 text-sm mb-4">
-                      {expedition.subtitle}
-                    </p>
+            {expeditionsCollection?.items &&
+              expeditionsCollection.items.map(
+                (expedition: any, index: number) => (
+                  <Link
+                    href={`/expedition/${expedition?.slug}`}
+                    key={index}
+                    className="expedition-card bg-white rounded-lg overflow-hidden hover:shadow-lg"
+                  >
+                    <div className="relative h-48">
+                      <Image
+                        src={
+                          expedition?.mainImage?.url ||
+                          "/images/fallback-image.jpeg"
+                        }
+                        alt={expedition.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="p-5">
+                      <h3 className="text-xl font-bold mb-2 text-prussianBlue">
+                        {expedition.title}
+                      </h3>
+                      <p className="text-gray-600 text-sm mb-4">
+                        {expedition.subtitle}
+                      </p>
 
-                    <div className="flex flex-wrap gap-4 mb-4">
-                      <div className="flex items-center text-sm text-gray-600">
-                        <Calendar className="h-4 w-4 mr-1 text-blueLagoon" />
-                        {expedition.duration}
+                      <div className="flex flex-wrap gap-4 mb-4">
+                        <div className="flex items-center text-sm text-gray-600">
+                          <Calendar className="h-4 w-4 mr-1 text-blueLagoon" />
+                          {expedition.duration}
+                        </div>
+                        <div className="flex items-center text-sm text-gray-600">
+                          <Mountain className="h-4 w-4 mr-1 text-blueLagoon" />
+                          {expedition.altitude}
+                        </div>
                       </div>
-                      <div className="flex items-center text-sm text-gray-600">
-                        <Mountain className="h-4 w-4 mr-1 text-blueLagoon" />
-                        {expedition.difficulty}
+
+                      <div className="flex items-center text-blueLagoon font-medium text-sm">
+                        View Details
+                        <ArrowRight className="ml-1 h-4 w-4" />
                       </div>
                     </div>
-
-                    <div className="flex items-center text-blueLagoon font-medium text-sm">
-                      View Details
-                      <ArrowRight className="ml-1 h-4 w-4" />
-                    </div>
-                  </div>
-                </Link>
-              )
-            )}
+                  </Link>
+                )
+              )}
           </div>
         </div>
       </section>
