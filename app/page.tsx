@@ -8,6 +8,7 @@ import CtaSection from "@/components/home/CtaSection";
 import ExpeditionCloud from "@/components/home/expeditions-cloud";
 import { fetchExpeditionTypes } from "@/graphql/api/fetchExpeditionTypes";
 import { fetchHeroSlider } from "@/graphql/api/fetchHeroSlider";
+import { fetchFooterDetails } from "@/graphql/api/fetchFooterDetails";
 
 export default async function Home() {
   const data = await fetchExpeditionTypes();
@@ -15,10 +16,10 @@ export default async function Home() {
 
   return (
     <div className="relative">
-      <HeroSlider data={heroSliderData} />
-      <div className="relative">
+      {/* <HeroSlider data={heroSliderData} /> */}
+      {/* <div className="relative">
         <ExpeditionCloud />
-      </div>
+      </div> */}
       <ExpeditionTypes data={data} />
       <FeaturedExpeditions data={data} />
       <RegionsSection data={data} />

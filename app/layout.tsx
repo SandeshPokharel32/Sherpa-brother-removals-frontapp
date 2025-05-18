@@ -5,6 +5,7 @@ import Footer from "@/components/layout/Footer";
 import ChatBot from "@/components/home/chat-bot";
 import "./globals.css";
 import { fetchNavigationItems } from "@/graphql/api/fetchNavigationItems";
+import { fetchFooterDetails } from "@/graphql/api/fetchFooterDetails";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -59,13 +60,15 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const data = await fetchNavigationItems();
+  const footerDetails = await fetchFooterDetails();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable}`}>
         <ChatBot />
         <Navbar data={data} />
         <main>{children}</main>
-        <Footer data={data} />
+        <Footer data={footerDetails} />
       </body>
     </html>
   );

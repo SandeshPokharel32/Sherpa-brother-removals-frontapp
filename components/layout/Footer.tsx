@@ -10,7 +10,7 @@ import {
   MapPin,
 } from "lucide-react";
 import BrandLogo from "./BrandLogo";
-import { ExpeditionTypesQuery } from "@/graphql/types";
+import { FooterDetailsData } from "@/graphql/api/fetchFooterDetails";
 
 export type Item = {
   title: string;
@@ -20,20 +20,13 @@ export type Item = {
   subcategories?: { title: string; href?: string; description?: string }[];
 };
 
-export default function Footer({
-  data,
-}: {
-  data: ExpeditionTypesQuery | null;
-}) {
+export default function Footer({ data }: { data: FooterDetailsData | null }) {
   console.log("🚀 ~ data:", data);
+  const footerDetail = data?.footerDetailsCollection?.items[0] || null;
 
-  const regionsData =
-    data?.types?.items?.flatMap((category: any) => {
-      return category.categories?.items || [];
-    }) || [];
+  const regionsData = footerDetail?.regionsCollection?.items || null;
 
-  const expeditionsData =
-    (regionsData.length > 0 && regionsData[0].expeditions?.items) || [];
+  const expeditionsData = footerDetail?.expeditionsCollection?.items || [];
 
   console.log("🚀 ~ expeditionsData:", expeditionsData);
   // console.log("🚀 ~ expeditionsData:", expeditionsData);
@@ -51,32 +44,31 @@ export default function Footer({
               </span> */}
               <BrandLogo />
             </Link>
-            <p className="text-gray-300 mb-6">
-              Professional mountain guides offering summit expeditions and
-              skiing services globally. With over 20 years of experience, we
-              provide safe and unforgettable adventures.
-            </p>
+            <p className="text-gray-300 mb-6">{footerDetail?.description}</p>
             <div className="flex gap-4">
               <a
-                href="https://facebook.com"
+                href={footerDetail?.contactDetail?.facebookLink || "#"}
+                target="_blank"
                 aria-label="Facebook"
                 className="text-gray-300 hover:text-blueLagoon transition-colors"
               >
                 <Facebook className="h-5 w-5" />
               </a>
               <a
-                href="https://instagram.com"
+                href={footerDetail?.contactDetail?.instagramLink || "#"}
+                target="_blank"
                 aria-label="Instagram"
                 className="text-gray-300 hover:text-blueLagoon transition-colors"
               >
                 <Instagram className="h-5 w-5" />
               </a>
               <a
-                href="https://twitter.com"
+                href={footerDetail?.contactDetail?.whatsappLink || "#"}
+                target="_blank"
                 aria-label="Twitter"
                 className="text-gray-300 hover:text-blueLagoon transition-colors"
               >
-                <Twitter className="h-5 w-5" />
+                <Mail className="h-5 w-5" />
               </a>
             </div>
           </div>
