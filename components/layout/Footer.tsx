@@ -10,7 +10,10 @@ import {
   MapPin,
 } from "lucide-react";
 import BrandLogo from "./BrandLogo";
-import { FooterDetailsData } from "@/graphql/api/fetchFooterDetails";
+import {
+  FooterDetailItem,
+  FooterDetailsData,
+} from "@/graphql/api/fetchFooterDetails";
 
 export type Item = {
   title: string;
@@ -21,16 +24,21 @@ export type Item = {
 };
 
 export default function Footer({ data }: { data: FooterDetailsData | null }) {
-  console.log("🚀 ~ data:", data);
-  const footerDetail = data?.footerDetailsCollection?.items[0] || null;
+  const footerArray = data?.footerDetailsCollection?.items || [];
 
-  const regionsData = footerDetail?.regionsCollection?.items || null;
+  const footerData = Object.fromEntries(
+    footerArray.map((item: FooterDetailItem) => {
+      return ["data", item];
+    })
+  );
 
-  const expeditionsData = footerDetail?.expeditionsCollection?.items || [];
+  const {
+    contactDetail,
+    description,
+    expeditionsCollection,
+    regionsCollection,
+  } = footerData?.data;
 
-  console.log("🚀 ~ expeditionsData:", expeditionsData);
-  // console.log("🚀 ~ expeditionsData:", expeditionsData);
-  // console.log("🚀 ~ expeditionsData:", regionsData);
   return (
     <footer className="bg-raisin-black text-white pt-16 pb-8">
       <div className="container-custom">
@@ -44,10 +52,10 @@ export default function Footer({ data }: { data: FooterDetailsData | null }) {
               </span> */}
               <BrandLogo />
             </Link>
-            <p className="text-gray-300 mb-6">{footerDetail?.description}</p>
+            <p className="text-gray-300 mb-6">{description || ""}</p>
             <div className="flex gap-4">
               <a
-                href={footerDetail?.contactDetail?.facebookLink || "#"}
+                href={contactDetail?.facebookLink || "#"}
                 target="_blank"
                 aria-label="Facebook"
                 className="text-gray-300 hover:text-blueLagoon transition-colors"
@@ -55,7 +63,7 @@ export default function Footer({ data }: { data: FooterDetailsData | null }) {
                 <Facebook className="h-5 w-5" />
               </a>
               <a
-                href={footerDetail?.contactDetail?.instagramLink || "#"}
+                href={contactDetail?.instagramLink || "#"}
                 target="_blank"
                 aria-label="Instagram"
                 className="text-gray-300 hover:text-blueLagoon transition-colors"
@@ -63,7 +71,7 @@ export default function Footer({ data }: { data: FooterDetailsData | null }) {
                 <Instagram className="h-5 w-5" />
               </a>
               <a
-                href={footerDetail?.contactDetail?.whatsappLink || "#"}
+                href={contactDetail?.whatsappLink || "#"}
                 target="_blank"
                 aria-label="Twitter"
                 className="text-gray-300 hover:text-blueLagoon transition-colors"
@@ -77,7 +85,7 @@ export default function Footer({ data }: { data: FooterDetailsData | null }) {
           <div>
             <h4 className="font-azosans font-bold text-lg mb-4">Expeditions</h4>
             <ul className="space-y-3">
-              {expeditionsData.map((item: any) => {
+              {expeditionsCollection?.items.map((item: any) => {
                 return (
                   <li key={item.slug}>
                     <Link
@@ -96,17 +104,16 @@ export default function Footer({ data }: { data: FooterDetailsData | null }) {
           <div>
             <h4 className="font-azosans font-bold text-lg mb-4">Regions</h4>
             <ul className="space-y-3">
-              {regionsData.length > 0 &&
-                regionsData.map((item) => (
-                  <li key={item.slug}>
-                    <Link
-                      href={`/categories/${item.slug}`}
-                      className="text-gray-300 hover:text-blueLagoon transition-colors"
-                    >
-                      {item.name}
-                    </Link>
-                  </li>
-                ))}
+              {regionsCollection?.items.map((item) => (
+                <li key={item.slug}>
+                  <Link
+                    href={`/categories/${item.slug}`}
+                    className="text-gray-300 hover:text-blueLagoon transition-colors"
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -117,22 +124,23 @@ export default function Footer({ data }: { data: FooterDetailsData | null }) {
               <li className="flex gap-3">
                 <MapPin className="h-5 w-5 text-blueLagoon shrink-0" />
                 <span className="text-gray-300">
-                  123 Mountain View Drive
+                  {/* 123 Mountain View Drive
                   <br />
                   Chamonix, 74400
                   <br />
-                  France
+                  France */}
+                  {contactDetail?.address}
                 </span>
               </li>
               <li className="flex gap-3">
                 <Phone className="h-5 w-5 text-blueLagoon shrink-0" />
-                <span className="text-gray-300">+1 (555) 123-4567</span>
+                <span className="text-gray-300">
+                  {contactDetail?.phoneNumber}
+                </span>
               </li>
               <li className="flex gap-3">
                 <Mail className="h-5 w-5 text-blueLagoon shrink-0" />
-                <span className="text-gray-300">
-                  info@summitexpeditions.com
-                </span>
+                <span className="text-gray-300">{contactDetail?.email}</span>
               </li>
             </ul>
           </div>

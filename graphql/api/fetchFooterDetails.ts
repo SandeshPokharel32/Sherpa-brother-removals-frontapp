@@ -8,6 +8,7 @@ export interface FooterDetailsData {
 }
 
 export interface FooterDetailItem {
+  key: any;
   description: string | null;
   regionsCollection: {
     items: Region[];
