@@ -220,9 +220,7 @@ type RegionParams = {
 export default async function RegionPage(props: RegionParams) {
   const params = await props.params;
   const { slug } = params;
-  console.log("🚀 ~ RegionPage ~ slug:", slug);
   const pageData = await fetchCategoryBySlug(slug);
-  console.log("🚀 ~ RegionPage ~ pageData:", pageData);
 
   const { expeditionsCollection, name, description, type } = pageData;
 
@@ -245,12 +243,13 @@ export default async function RegionPage(props: RegionParams) {
       >
         <div className="absolute inset-0 bg-linear-to-b from-raisinBlack/50 to-raisinBlack/80"></div>
         <div className="container-custom relative z-10 h-full flex flex-col justify-end pb-12">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-prussian-blue mb-3">
-            {name}
-          </h1>
-          <h4 className="text-xl md:text-2xl lg:text-3xl mt-1">
+          <h4 className="text-xl md:text-2xl lg:text-2xl mt-1 text-white">
             {type?.name || ""}
           </h4>
+
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-3">
+            {name}
+          </h1>
         </div>
       </div>
 
