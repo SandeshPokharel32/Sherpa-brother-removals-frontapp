@@ -24,7 +24,7 @@ export default function Footer({ data }: { data: FooterDetailsData | null }) {
   console.log("🚀 ~ data:", data);
   const footerDetail = data?.footerDetailsCollection?.items[0] || null;
 
-  const regionsData = footerDetail?.regionsCollection?.items || null;
+  const regionsData = footerDetail?.regionsCollection?.items || [];
 
   const expeditionsData = footerDetail?.expeditionsCollection?.items || [];
 

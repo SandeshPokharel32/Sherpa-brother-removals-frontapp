@@ -140,7 +140,8 @@ export default function PrivacyPolicyPage() {
             <AccordionContent>
               <p>
                 We may update this Privacy Policy occasionally. Changes will be
-                posted on this page with a revised "Last Updated" date.
+                posted on this page with a revised &ldquo;Last Updated&rdquo;
+                date.
               </p>
             </AccordionContent>
           </AccordionItem>

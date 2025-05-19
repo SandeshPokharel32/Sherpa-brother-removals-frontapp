@@ -15,7 +15,7 @@ import { HeroSliderData, VideoContentItem } from "@/graphql/types";
 gsap.registerPlugin(ScrollTrigger);
 
 interface HorizontalVideoSliderProps {
-  data: HeroSliderData;
+  data: HeroSliderData | null;
 }
 
 export default function HorizontalVideoSlider({
