@@ -13,6 +13,7 @@ import {
 import Itenaries from "@/components/itenaries";
 import { fetchExpeditionSlugs } from "@/graphql/api/fetchExpeditionSlugs";
 import { fetchExpeditionBySlug } from "@/graphql/api/fetchExpeditionBySlug";
+import CtaSection from "@/components/home/CtaSection";
 
 type ExpeditionParams = {
   params: Promise<{
@@ -308,28 +309,7 @@ export default async function ExpeditionPage(props: ExpeditionParams) {
       </section>
 
       {/* Related Expeditions CTA */}
-      <section className="py-16 bg-gray-50">
-        <div className="container-custom text-center">
-          <h2 className="text-3xl font-bold mb-4 text-prussianBlue">
-            Explore Related Expeditions
-          </h2>
-          <p className="max-w-2xl mx-auto mb-8 text-gray-700">
-            Discover more adventures in the {expedition?.region?.split(",")[0]}{" "}
-            region or explore other expeditions of similar difficulty.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link href="#" className="p-4 bg-blue-lagoon text-white rounded-lg">
-              Browse {expedition?.region?.split(",")[0]} Trips
-            </Link>
-            <Link
-              href="/expeditions"
-              className="p-4 bg-primary text-white rounded-lg"
-            >
-              View All Expeditions
-            </Link>
-          </div>
-        </div>
-      </section>
+      <CtaSection />
     </>
   );
 }

@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Calendar, Mountain, ArrowRight } from "lucide-react";
 import { fetchCategoriesSlugs } from "@/graphql/api/fetchCategoriesSlugs";
 import { fetchCategoryBySlug } from "@/graphql/api/fetchCategoryBySlug";
+import CtaSection from "@/components/home/CtaSection";
 
 // This would typically come from a CMS or API
 const regions = {
@@ -324,21 +325,7 @@ export default async function RegionPage(props: RegionParams) {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-prussianBlue text-black">
-        <div className="container-custom text-center">
-          <h2 className="text-3xl font-bold mb-4">
-            Plan Your {name} Adventure
-          </h2>
-          <p className="max-w-2xl mx-auto mb-8">
-            Our expert guides will help you create the perfect expedition in the{" "}
-            {name}. Contact us today to start planning your next mountain
-            adventure.
-          </p>
-          <Link href="/contact" className="btn-secondary">
-            Contact Our Team
-          </Link>
-        </div>
-      </section>
+      <CtaSection />
     </>
   );
 }

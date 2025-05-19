@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import Link from "next/link";
+import { Button } from "../ui/button";
 
 export default function CtaSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -33,10 +34,15 @@ export default function CtaSection() {
           </p>
           <div className="animate-item flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/expeditions" className="btn-primary">
-              Explore Expeditions
+              <Button size="lg" className="cursor-pointer">
+                Explore Expeditions
+              </Button>
             </Link>
             <Link href="/contact" className="btn-outline">
-              Contact Us
+              <Button variant="secondary" size="lg" className="cursor-pointer">
+                {" "}
+                Contact Us
+              </Button>
             </Link>
           </div>
         </div>
