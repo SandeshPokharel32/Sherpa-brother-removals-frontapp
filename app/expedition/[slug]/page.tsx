@@ -82,28 +82,28 @@ export default async function ExpeditionPage(props: ExpeditionParams) {
         <div className="container-custom">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div className="flex items-center gap-3">
-              <MapPin className="h-6 w-6 text-blueLagoon" />
+              <MapPin className="h-6 w-6 text-blue-lagoon" />
               <div>
                 <p className="text-sm text-white/70">Region</p>
                 <p className="font-medium">{expedition?.region}</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <Mountain className="h-6 w-6 text-blueLagoon" />
+              <Mountain className="h-6 w-6 text-blue-lagoon" />
               <div>
                 <p className="text-sm text-white/70">Altitude</p>
                 <p className="font-medium">{expedition.altitude}</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <Calendar className="h-6 w-6 text-blueLagoon" />
+              <Calendar className="h-6 w-6 text-blue-lagoon" />
               <div>
                 <p className="text-sm text-white/70">Duration</p>
                 <p className="font-medium">{expedition.duration}</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <Users className="h-6 w-6 text-blueLagoon" />
+              <Users className="h-6 w-6 text-blue-lagoon" />
               <div>
                 <p className="text-sm text-white/70">Group Size</p>
                 <p className="font-medium">{expedition.groupSize}</p>
@@ -242,35 +242,35 @@ export default async function ExpeditionPage(props: ExpeditionParams) {
                 </h3>
                 <div className="space-y-4 mb-6">
                   <div className="flex items-center gap-3">
-                    <Clock className="h-5 w-5 text-blueLagoon" />
+                    <Clock className="h-5 w-5 text-blue-lagoon" />
                     <div>
                       <p className="text-sm text-gray-500">Duration</p>
                       <p className="font-medium">{expedition.duration}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Calendar className="h-5 w-5 text-blueLagoon" />
+                    <Calendar className="h-5 w-5 text-blue-lagoon" />
                     <div>
                       <p className="text-sm text-gray-500">Best Season</p>
                       <p className="font-medium">{expedition.season}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Mountain className="h-5 w-5 text-blueLagoon" />
+                    <Mountain className="h-5 w-5 text-blue-lagoon" />
                     <div>
                       <p className="text-sm text-gray-500">Difficulty</p>
                       <p className="font-medium">{expedition.difficulty}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Shield className="h-5 w-5 text-blueLagoon" />
+                    <Shield className="h-5 w-5 text-blue-lagoon" />
                     <div>
                       <p className="text-sm text-gray-500">Guide Ratio</p>
                       <p className="font-medium">1:2 - 1:4</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <DollarSign className="h-5 w-5 text-blueLagoon" />
+                    <DollarSign className="h-5 w-5 text-blue-lagoon" />
                     <div>
                       <p className="text-sm text-gray-500">Price</p>
                       <p className="font-bold text-xl">{expedition.price}</p>

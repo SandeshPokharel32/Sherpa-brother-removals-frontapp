@@ -21,16 +21,12 @@ export type Item = {
 };
 
 export default function Footer({ data }: { data: FooterDetailsData | null }) {
-  console.log("🚀 ~ data:", data);
   const footerDetail = data?.footerDetailsCollection?.items[0] || null;
 
   const regionsData = footerDetail?.regionsCollection?.items || [];
 
   const expeditionsData = footerDetail?.expeditionsCollection?.items || [];
 
-  console.log("🚀 ~ expeditionsData:", expeditionsData);
-  // console.log("🚀 ~ expeditionsData:", expeditionsData);
-  // console.log("🚀 ~ expeditionsData:", regionsData);
   return (
     <footer className="bg-raisin-black text-white pt-16 pb-8">
       <div className="container-custom">
