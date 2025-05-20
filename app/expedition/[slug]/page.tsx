@@ -9,6 +9,7 @@ import {
   Clock,
   Shield,
   DollarSign,
+  Check,
 } from "lucide-react";
 import Itenaries from "@/components/itenaries";
 import { fetchExpeditionSlugs } from "@/graphql/api/fetchExpeditionSlugs";
@@ -159,7 +160,9 @@ export default async function ExpeditionPage(props: ExpeditionParams) {
                     {expedition?.included?.items?.map(
                       (item: any, index: any) => (
                         <li key={index} className="flex items-center gap-2">
-                          <span className="text-blue-lagoon mt-1">✗</span>
+                          <span className="text-blue-lagoon mt-1">
+                            <Check />
+                          </span>
                           <span className="text-blue-lagoon bold text-lg">
                             {item?.title}
                           </span>
