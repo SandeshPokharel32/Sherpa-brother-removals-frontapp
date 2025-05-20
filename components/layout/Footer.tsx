@@ -21,16 +21,12 @@ export type Item = {
 };
 
 export default function Footer({ data }: { data: FooterDetailsData | null }) {
-  console.log("🚀 ~ data:", data);
   const footerDetail = data?.footerDetailsCollection?.items[0] || null;
 
-  const regionsData = footerDetail?.regionsCollection?.items || null;
+  const regionsData = footerDetail?.regionsCollection?.items || [];
 
   const expeditionsData = footerDetail?.expeditionsCollection?.items || [];
 
-  console.log("🚀 ~ expeditionsData:", expeditionsData);
-  // console.log("🚀 ~ expeditionsData:", expeditionsData);
-  // console.log("🚀 ~ expeditionsData:", regionsData);
   return (
     <footer className="bg-raisin-black text-white pt-16 pb-8">
       <div className="container-custom">
@@ -116,22 +112,22 @@ export default function Footer({ data }: { data: FooterDetailsData | null }) {
             <ul className="space-y-4">
               <li className="flex gap-3">
                 <MapPin className="h-5 w-5 text-blueLagoon shrink-0" />
-                <span className="text-gray-300">
-                  123 Mountain View Drive
-                  <br />
-                  Chamonix, 74400
-                  <br />
-                  France
-                </span>
+                {footerDetail?.contactDetail?.address && (
+                  <span className="text-gray-300">
+                    {footerDetail?.contactDetail?.address}
+                  </span>
+                )}
               </li>
               <li className="flex gap-3">
                 <Phone className="h-5 w-5 text-blueLagoon shrink-0" />
-                <span className="text-gray-300">+1 (555) 123-4567</span>
+                <span className="text-gray-300">
+                  {footerDetail?.contactDetail?.phoneNumber}
+                </span>
               </li>
               <li className="flex gap-3">
                 <Mail className="h-5 w-5 text-blueLagoon shrink-0" />
                 <span className="text-gray-300">
-                  info@summitexpeditions.com
+                  {footerDetail?.contactDetail?.email}
                 </span>
               </li>
             </ul>

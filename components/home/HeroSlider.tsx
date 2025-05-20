@@ -15,7 +15,7 @@ import Player from "@vimeo/player";
 gsap.registerPlugin(ScrollTrigger);
 
 interface HorizontalVideoSliderProps {
-  data: HeroSliderData;
+  data: HeroSliderData | null;
 }
 
 export default function HorizontalVideoSlider({

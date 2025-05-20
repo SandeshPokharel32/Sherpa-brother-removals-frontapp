@@ -139,8 +139,8 @@ export default function TermsPage() {
             <AccordionContent>
               <p>
                 We may update these Terms and Conditions from time to time.
-                Changes will be posted on this page with a revised "Last
-                Updated" date.
+                Changes will be posted on this page with a revised &ldquo;Last
+                Updated&rdquo; date.
               </p>
             </AccordionContent>
           </AccordionItem>

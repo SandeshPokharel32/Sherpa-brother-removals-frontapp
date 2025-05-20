@@ -9,10 +9,12 @@ import {
   Clock,
   Shield,
   DollarSign,
+  Check,
 } from "lucide-react";
 import Itenaries from "@/components/itenaries";
 import { fetchExpeditionSlugs } from "@/graphql/api/fetchExpeditionSlugs";
 import { fetchExpeditionBySlug } from "@/graphql/api/fetchExpeditionBySlug";
+import CtaSection from "@/components/home/CtaSection";
 
 type ExpeditionParams = {
   params: Promise<{
@@ -80,28 +82,28 @@ export default async function ExpeditionPage(props: ExpeditionParams) {
         <div className="container-custom">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div className="flex items-center gap-3">
-              <MapPin className="h-6 w-6 text-blueLagoon" />
+              <MapPin className="h-6 w-6 text-blue-lagoon" />
               <div>
                 <p className="text-sm text-white/70">Region</p>
                 <p className="font-medium">{expedition?.region}</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <Mountain className="h-6 w-6 text-blueLagoon" />
+              <Mountain className="h-6 w-6 text-blue-lagoon" />
               <div>
                 <p className="text-sm text-white/70">Altitude</p>
                 <p className="font-medium">{expedition.altitude}</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <Calendar className="h-6 w-6 text-blueLagoon" />
+              <Calendar className="h-6 w-6 text-blue-lagoon" />
               <div>
                 <p className="text-sm text-white/70">Duration</p>
                 <p className="font-medium">{expedition.duration}</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <Users className="h-6 w-6 text-blueLagoon" />
+              <Users className="h-6 w-6 text-blue-lagoon" />
               <div>
                 <p className="text-sm text-white/70">Group Size</p>
                 <p className="font-medium">{expedition.groupSize}</p>
@@ -158,7 +160,9 @@ export default async function ExpeditionPage(props: ExpeditionParams) {
                     {expedition?.included?.items?.map(
                       (item: any, index: any) => (
                         <li key={index} className="flex items-center gap-2">
-                          <span className="text-blue-lagoon mt-1">✗</span>
+                          <span className="text-blue-lagoon mt-1">
+                            <Check />
+                          </span>
                           <span className="text-blue-lagoon bold text-lg">
                             {item?.title}
                           </span>
@@ -238,35 +242,35 @@ export default async function ExpeditionPage(props: ExpeditionParams) {
                 </h3>
                 <div className="space-y-4 mb-6">
                   <div className="flex items-center gap-3">
-                    <Clock className="h-5 w-5 text-blueLagoon" />
+                    <Clock className="h-5 w-5 text-blue-lagoon" />
                     <div>
                       <p className="text-sm text-gray-500">Duration</p>
                       <p className="font-medium">{expedition.duration}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Calendar className="h-5 w-5 text-blueLagoon" />
+                    <Calendar className="h-5 w-5 text-blue-lagoon" />
                     <div>
                       <p className="text-sm text-gray-500">Best Season</p>
                       <p className="font-medium">{expedition.season}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Mountain className="h-5 w-5 text-blueLagoon" />
+                    <Mountain className="h-5 w-5 text-blue-lagoon" />
                     <div>
                       <p className="text-sm text-gray-500">Difficulty</p>
                       <p className="font-medium">{expedition.difficulty}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Shield className="h-5 w-5 text-blueLagoon" />
+                    <Shield className="h-5 w-5 text-blue-lagoon" />
                     <div>
                       <p className="text-sm text-gray-500">Guide Ratio</p>
                       <p className="font-medium">1:2 - 1:4</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <DollarSign className="h-5 w-5 text-blueLagoon" />
+                    <DollarSign className="h-5 w-5 text-blue-lagoon" />
                     <div>
                       <p className="text-sm text-gray-500">Price</p>
                       <p className="font-bold text-xl">{expedition.price}</p>
@@ -308,28 +312,7 @@ export default async function ExpeditionPage(props: ExpeditionParams) {
       </section>
 
       {/* Related Expeditions CTA */}
-      <section className="py-16 bg-gray-50">
-        <div className="container-custom text-center">
-          <h2 className="text-3xl font-bold mb-4 text-prussianBlue">
-            Explore Related Expeditions
-          </h2>
-          <p className="max-w-2xl mx-auto mb-8 text-gray-700">
-            Discover more adventures in the {expedition?.region?.split(",")[0]}{" "}
-            region or explore other expeditions of similar difficulty.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link href="#" className="p-4 bg-blue-lagoon text-white rounded-lg">
-              Browse {expedition?.region?.split(",")[0]} Trips
-            </Link>
-            <Link
-              href="/expeditions"
-              className="p-4 bg-primary text-white rounded-lg"
-            >
-              View All Expeditions
-            </Link>
-          </div>
-        </div>
-      </section>
+      <CtaSection />
     </>
   );
 }
