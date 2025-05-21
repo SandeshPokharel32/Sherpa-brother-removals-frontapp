@@ -27,16 +27,11 @@ export async function generateStaticParams() {
   return slugs.map((slug: string) => ({ slug }));
 }
 
-export function BookingLink({ expedition }: { expedition: { title: string } }) {
-  const phone = "+9779851235820";
-  const message = `Hi, I want to book a ${expedition.title} adventure.`;
-  const encodedMessage = encodeURIComponent(message);
-  const whatsappUrl = `https://api.whatsapp.com/send/?phone=${phone}&text=${encodedMessage}`;
-
+export function BookingLink({ expedition }: { expedition: { slug: string } }) {
   return (
     <Link
-      href={whatsappUrl}
-      target="_blank"
+      href={`https://xtreme.dubdubco.com/${expedition.slug}`}
+      target="_self"
       rel="noopener noreferrer"
       className="bg-primary p-3 rounded-lg text-white"
     >

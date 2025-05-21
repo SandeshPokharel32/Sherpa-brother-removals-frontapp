@@ -3,20 +3,20 @@
 import { useRef } from "react";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import Image from "next/image";
 
 export default function CtaSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
   return (
-    <section
-      ref={sectionRef}
-      className="py-20 bg-cover bg-center relative"
-      style={{
-        backgroundImage:
-          "url(https://images.pexels.com/photos/2356059/pexels-photo-2356059.jpeg)",
-      }}
-    >
+    <section ref={sectionRef} className="py-20 bg-cover bg-center relative">
+      <Image
+        alt="get some adventures"
+        src="/images/cta-image.jpeg"
+        fill
+        objectFit="cover"
+      />
       <div className="absolute inset-0 bg-raisin-black/70"></div>
       <div className="container-custom relative z-10">
         <div
@@ -34,12 +34,16 @@ export default function CtaSection() {
           </p>
           <div className="animate-item flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/expeditions" className="btn-primary">
-              <Button size="lg" className="cursor-pointer">
+              <Button size="lg" className="cursor-pointer w-full md:w-auto">
                 Explore Expeditions
               </Button>
             </Link>
             <Link href="/contact" className="btn-outline">
-              <Button variant="secondary" size="lg" className="cursor-pointer">
+              <Button
+                variant="secondary"
+                size="lg"
+                className="cursor-pointer w-full md:w-auto"
+              >
                 {" "}
                 Contact Us
               </Button>

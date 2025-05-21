@@ -1,74 +1,76 @@
+"use client";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import { Calendar, Mountain, ArrowRight } from "lucide-react";
-import { fetchCategoriesSlugs } from "@/graphql/api/fetchCategoriesSlugs";
-import { fetchCategoryBySlug } from "@/graphql/api/fetchCategoryBySlug";
+import { ArrowRight } from "lucide-react";
 import CtaSection from "@/components/home/CtaSection";
+import { Expedition } from "@/graphql/api/fetchAllExpeditions";
 
-export async function generateStaticParams() {
-  const slugs = await fetchCategoriesSlugs();
-  return slugs;
-}
+export default function ExpeditionsClientPage({
+  expeditions,
+}: {
+  expeditions: Expedition[];
+}) {
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [filteredExpeditions, setFilteredExpeditions] =
+    useState<any[]>(expeditions);
 
-type RegionParams = {
-  params: Promise<{
-    slug: string;
-  }>;
-};
-
-export default async function RegionPage(props: RegionParams) {
-  const params = await props.params;
-  const { slug } = params;
-  const pageData = await fetchCategoryBySlug(slug);
-
-  if (!pageData?.name) {
-    return notFound();
-  }
-
-  const { expeditionsCollection, name, description, type } = pageData;
+  // Handle search filter
+  useEffect(() => {
+    if (searchQuery) {
+      setFilteredExpeditions(
+        expeditions.filter(
+          (expedition) =>
+            expedition?.title
+              .toLowerCase()
+              .includes(searchQuery.toLowerCase()) ||
+            expedition?.subtitle
+              .toLowerCase()
+              .includes(searchQuery.toLowerCase()) ||
+            expedition?.description
+              ?.toLowerCase()
+              .includes(searchQuery.toLowerCase())
+        )
+      );
+    } else {
+      setFilteredExpeditions(expeditions);
+    }
+  }, [searchQuery, expeditions]);
 
   return (
     <>
       {/* Hero Section */}
       <div
-        className="relative h-[50vh] md:h-[60vh] bg-cover bg-center"
+        className="relative h-[50vh] md:h-[50vh] bg-cover bg-center"
         style={{
           backgroundImage: `url(${"/images/fallback-image.jpeg"})`,
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/80"></div>
         <div className="container-custom relative z-10 h-full flex flex-col justify-end pb-12">
-          <h4 className="text-lg md:text-xl lg:text-2xl  text-white font-light mb-1">
-            {type?.name || ""}
-          </h4>
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-4 tracking-tight">
-            {name}
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tight">
+            Explore Expeditions
           </h1>
         </div>
       </div>
 
-      {/* Description Section */}
-      <section className="py-16 bg-white">
-        <div className="container-custom">
-          <div className="max-w-4xl mx-auto">
-            <p className="text-lg text-gray-700 leading-relaxed">
-              {description}
-            </p>
-          </div>
-        </div>
-      </section>
-
       {/* Expeditions Section */}
       <section className="py-20 bg-gray-100">
+        <div className="container-custom mb-20">
+          <div className="flex justify-center">
+            <input
+              type="text"
+              className="w-full md:w-1/2 lg:w-1/3 bg-white p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Search expeditions..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+        </div>
         <div className="container-custom">
-          <h2 className="text-4xl font-semibold mb-12 text-blue-lagoon">
-            {name} Expeditions
-          </h2>
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-12">
-            {expeditionsCollection?.items?.map(
-              (expedition: any, index: number) => (
+            {filteredExpeditions.length > 0 ? (
+              filteredExpeditions.map((expedition: any, index: number) => (
                 <Link
                   href={`/expedition/${expedition?.slug}`}
                   key={index}
@@ -96,11 +98,11 @@ export default async function RegionPage(props: RegionParams) {
 
                     <div className="flex flex-wrap gap-4 mb-6">
                       <div className="flex items-center text-sm text-gray-600">
-                        <Calendar className="h-4 w-4 mr-1 text-blueLagoon" />
+                        <span className="h-4 w-4 mr-1 text-blueLagoon">📅</span>
                         {expedition.duration}
                       </div>
                       <div className="flex items-center text-sm text-gray-600">
-                        <Mountain className="h-4 w-4 mr-1 text-blueLagoon" />
+                        <span className="h-4 w-4 mr-1 text-blueLagoon">🏔️</span>
                         {expedition.altitude}
                       </div>
                     </div>
@@ -111,14 +113,15 @@ export default async function RegionPage(props: RegionParams) {
                     </div>
                   </div>
                 </Link>
-              )
+              ))
+            ) : (
+              <div className="col-span-3 text-center text-xl text-gray-600">
+                No expeditions found.
+              </div>
             )}
           </div>
         </div>
       </section>
-
-      {/* CTA Section */}
-      <CtaSection />
     </>
   );
 }

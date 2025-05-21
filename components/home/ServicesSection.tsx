@@ -1,15 +1,5 @@
-"use client";
-
-import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { Compass, Award, Shield, Users, BookOpen, Star } from "lucide-react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-// Register ScrollTrigger
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 const services = [
   {
@@ -57,28 +47,17 @@ const services = [
 ];
 
 export default function ServicesSection() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
-  const servicesRef = useRef<(HTMLDivElement | null)[]>([]);
-
   return (
-    <section ref={sectionRef} className="pt-10 md:py-20 bg-gray-50">
+    <section className="pt-10 md:py-20 bg-gray-50">
       <div className="container-custom">
-        <h2
-          ref={titleRef}
-          className="text-5xl sm:text-7xl font-bold text-center mb-16 text-raisinBlack"
-        >
+        <h2 className="text-5xl sm:text-7xl font-bold text-center mb-16 text-raisinBlack">
           Services We Offer
         </h2>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div
-            ref={imageRef}
-            className="relative rounded-lg overflow-hidden h-[600px]"
-          >
+          <div className="relative rounded-lg overflow-hidden h-[600px]">
             <Image
-              src="https://images.pexels.com/photos/414277/pexels-photo-414277.jpeg"
+              src="/images/services.jpeg"
               alt="Mountain expedition services"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
@@ -99,7 +78,6 @@ export default function ServicesSection() {
             {services.map((service, index) => (
               <div
                 key={service.id}
-                ref={(el) => (servicesRef.current[index] = el)}
                 className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
               >
                 <div className="mb-4">{service.icon}</div>

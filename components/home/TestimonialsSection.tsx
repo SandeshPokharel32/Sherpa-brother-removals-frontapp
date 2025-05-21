@@ -69,15 +69,7 @@ export default function TestimonialsSection() {
               className="bg-white rounded-lg p-6 shadow-lg"
             >
               <div className="flex items-center mb-4">
-                <div className="relative w-14 h-14 rounded-full overflow-hidden mr-4">
-                  <Image
-                    src={testimonial.image}
-                    alt={testimonial.name}
-                    fill
-                    sizes="56px"
-                    className="object-cover"
-                  />
-                </div>
+                <div className="relative w-14 border-solid border border-black h-14 rounded-full overflow-hidden bg-white mr-4"></div>
                 <div>
                   <h4 className="font-bold text-prussianBlue">
                     {testimonial.name}
